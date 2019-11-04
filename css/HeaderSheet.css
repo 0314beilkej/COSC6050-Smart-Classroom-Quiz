@@ -119,7 +119,6 @@ header .menu-toggle{
     height: 200px;
     margin-left: -150px;
     margin-top: -200px;
-    background-color: #f1c40f;
     text-align: center;
   
     /* needed styles for the overlay */
@@ -130,12 +129,14 @@ header .menu-toggle{
   
   /* Add styles to the form container */
 .form-container {
-	max-width: 400px;
+	max-width: 1000%;
 	padding: 10px;
 	background-color: white;
 	text-align: center;
 	position: relative;
 	border-radius: 4px;
+	max-height: calc(100vh - 210px);
+    overflow-y: auto;
   }
   
   /* Full-width input fields */
@@ -147,6 +148,16 @@ header .menu-toggle{
 	background: #f1f1f1;
 	color: black;
   }
+
+  .form-container textarea{
+	width: 100%;
+	padding: 10px;
+	margin: 5px 0 22px 0;
+	border: none;
+	background: #f1f1f1;
+	color: black;
+  }
+
 
 .form-container p{
 	color: black;
@@ -163,7 +174,7 @@ header .menu-toggle{
   }
 
   /* When the inputs get focus, do something */
-  .form-container input[type=text]:focus{
+  .form-container input[type=text]:focus, textarea:focus{
 	background-color: #ddd;
 	outline: none;
   }

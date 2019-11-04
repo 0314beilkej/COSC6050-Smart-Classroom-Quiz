@@ -105,7 +105,6 @@
          		<li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 				<li class="active"><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
           		<li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li> 
-				<!-- <li><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li> -->
        		</ul>
        </div>
 		<!--Main content here -->

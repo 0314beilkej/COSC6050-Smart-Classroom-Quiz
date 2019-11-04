@@ -1,17 +1,18 @@
 
 .main-section{
-	width:40%;
+	width: 600px;
 	margin:0 auto;
 	text-align: center;
 	padding: 0px 5px;
+
 }
 .dashbord{
-	width:40%;
+	width:60%;
 	display: inline-block;
 	background-color:#34495E;
 	color:#fff;
     margin-top: 65px;
-    margin-left: 200px; 
+    margin-left: 400px; 
 }
 .icon-section i{
 	font-size: 30px;

@@ -14,7 +14,15 @@ if ($conn->connect_error) {
 	$password = filter_input(INPUT_POST, 'password');
 	$passwordConf = filter_input(INPUT_POST, 'passwordConf');
 	$role = filter_input(INPUT_POST, 'role');
+	
+	// Set session variables for form in the case that the user will need to re-enter data
+	$_SESSION['first_name_form'] = $firstname;
+	$_SESSION['last_name_form'] = $lastname;
+	$_SESSION['username_form'] = $username;
+	$_SESSION['email_form'] = $email;
+	
 	// Ensure that the account can be added.  
+	
 	$valid = TRUE;
 
 	// Check if username exists
@@ -23,8 +31,9 @@ if ($conn->connect_error) {
 		$result = $conn->query($checkSQL)->num_rows;
 		if ($result > 0) {
 			$valid = false;
+			$_SESSION['username_form'] = ""; //reset username to null because it is not valid
 			echo("<script>alert('The username ".$username." already exists.  Try a different username')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 			
 		}
 	}
@@ -35,8 +44,9 @@ if ($conn->connect_error) {
 		$result = $conn->query($checkSQL)->num_rows;
 		if ($result > 0) {
 			$valid = false;
+			$_SESSION['email_form'] = ""; //reset email to null because it is not valid
 			echo("<script>alert('There is already an account associated with ".$email.". Try signing up with another email address.')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 		}
 	}
 	
@@ -45,28 +55,28 @@ if ($conn->connect_error) {
 		if ($password !== $passwordConf){
 			$valid = false;
 			echo ("<script>alert('Passwords do not match!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 
 		// Validate password strength
 		} elseif (strlen($password) < 6){
 			$valid = false;
 			echo ("<script>alert('Your Password Must Contain At Least 6 Characters!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 
 		} elseif (!preg_match("#[0-9]+#",$password)) {
 			$valid = false;
 			echo ("<script>alert('Your Password Must Contain At Least 1 Number!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 	
 		} elseif (!preg_match("#[A-Z]+#",$password)) {
 			$valid = false;
 			echo ("<script>alert('Your Password Must Contain At Least 1 Uppercase Letter!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 
 		} elseif (!preg_match("#[a-z]+#",$password)) {
 			$valid = false;
 			echo ("<script>alert('Your Password Must Contain At Least 1 Lowercase Letter!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup.html';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/signup_retry.php';</script>");
 		}
 	}
 
@@ -78,6 +88,14 @@ if ($conn->connect_error) {
 			$result = $conn->query($checkSQL);
 			while ($row = $result-> fetch_assoc()) {
 				$_SESSION['username'] = $username;
+				
+				//reset form data to null
+				$_SESSION['first_name_form'] = "";
+				$_SESSION['last_name_form'] = "";
+				$_SESSION['username_form'] = "";
+				$_SESSION['email_form'] = "";
+				
+				//redirect to appropriate homescreen
 				if ($row["role"] == "Teacher") {
 					echo ("<script>alert('Your account has been successfully created. Click OK to view your homepage.')</script>");
 					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");

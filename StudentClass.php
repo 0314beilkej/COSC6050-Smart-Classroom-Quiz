@@ -55,7 +55,7 @@
 		</li>
 		
 		<li><a href="#">
-			<i class="fa fa-user"style="font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
+			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
 		       <li><a href="MyProfile.php">My profile</a></li>
 		       <li><a href="#">Settings</a></li>
@@ -76,7 +76,7 @@
 		<!--Main content here -->
 	  <div class="main_content">  
 		<div class="info">
-          <div>Here the main content</div>
+          
 		</div>
 	  </div>
 </div>

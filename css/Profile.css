@@ -1,0 +1,26 @@
+/*import Google Fonts*/
+@import url('https://fonts.googleapis.com/css?family=Lora&display=swap');
+
+
+.fieldset {
+	width: 800px;
+	padding: 50px;
+	margin-top: 5%;
+	margin-left: 37.5%;
+	border: 1px solid #80ced7;
+	border-radius: 5px;
+	font-size: 1em;
+	font-family: 'Lora', serif;
+}
+
+.fieldset .legend {
+	text-align: center;
+}
+
+.fieldset .legend a {
+	margin-left: 20px;
+}
+
+.fieldset .legend input {
+	
+}

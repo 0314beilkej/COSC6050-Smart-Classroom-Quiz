@@ -1,3 +1,6 @@
+<?php 
+	session_start();
+?>
 <head>
   <title>Register</title>
    <!--Bootsrap 4 CSS-->
@@ -17,19 +20,19 @@
         <h3 class="text-center">Sign Up</h3> 
         <div class="form-group">
             <label for="fname"><b>First Name</b></label>
-            <input type="text" name="fname" class="form-control form-control-lg" required>
+            <input type="text" name="fname" class="form-control form-control-lg" required value=<?php echo $_SESSION['first_name_form'] ?> >
         </div>
         <div class="form-group">
             <label for="lname"><b>Last Name</b></label>
-            <input type="text" name="lname"  class="form-control form-control-lg" required>
+            <input type="text" name="lname"  class="form-control form-control-lg" required value=<?php echo $_SESSION['last_name_form'] ?>>
         </div>
         <div class="form-group">
             <label for="username"><b>Username</b></label>
-            <input type="text" name="username" class="form-control form-control-lg" required>
+            <input type="text" name="username" class="form-control form-control-lg" required value=<?php echo $_SESSION['username_form'] ?>>
         </div>
         <div class="form-group">
             <label for="email"><b>Email</b></label>
-            <input type="email" name="email" class="form-control form-control-lg" required>
+            <input type="email" name="email" class="form-control form-control-lg" required value=<?php echo $_SESSION['email_form'] ?>>
         </div>
         <div class="form-group">
             <label  for="psw"> <b>Password</b>

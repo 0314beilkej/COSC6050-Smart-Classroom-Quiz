@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     $subject = $_POST['subject'];
 	// Ensure that the account can be added.  
 	$valid = TRUE;
-	$username= $_SESSION['username'];
+	$username = $_SESSION['username'];
 	
 	// Get a unique class code
 	$codeExists = true;
@@ -34,6 +34,17 @@ if ($conn->connect_error) {
 		} 
 	}
 
+	// Check if a classname exists
+	if ($valid === TRUE){
+		$checkSQL = "SELECT * from class where classname = '$classname'";
+		$result = $conn->query($checkSQL)->num_rows;
+		if ($result > 0) {
+			$valid = false;
+			echo("<script>alert('There is already a class associated with ".$classname.". Try create a class with another class name.')</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+		}
+	}
+
 	// If the data information is valid, insert into class table
 	if ($valid === TRUE) {
 		$newClassSQL = "insert into class (classname, class_code, subject, instructor_id) values ('$classname', '$classcode', '$subject', '$username')";
@@ -41,7 +52,9 @@ if ($conn->connect_error) {
 			echo("<script>alert('New class created successfully! Class Code: ".$classcode."')</script>");
             echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			//echo "Error: " . $sql . "<br>" . $conn->error;
+            echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+
 		}
     }
 }

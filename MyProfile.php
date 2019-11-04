@@ -6,6 +6,7 @@ include('php/connect.php');
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   
 	<!--Font Awesome-->
 	<script src="https://kit.fontawesome.com/f2904e4571.js" crossorigin="anonymous"></script>
 	
@@ -15,16 +16,28 @@ include('php/connect.php');
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="css/HeaderSheet.css">
 	<link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="css/Profile.css">
+    <!--bootstrap-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Insert javascript Modal link-->
 	<script src="js/Modal_popup.js"></script>
 	
-	<title>Teacher's Homepage</title>
+	<title>User Profile</title>
 </head>
 <body>
 
 	<!-- Top Navigation  -->
 <header>
+	<div class="logo">
+		<h1 class="log-text">MarQuiz</h1>
+		<h4>
+		<a class= "class_name" href="#0">
+		<i class="fas fa-grip-vertical" style="color:#E6E6FA"></i>&nbsp User Profile</a>
+		</h4>
+	</div>
+	
+	
 	<i class="fa fa-bars menu-toggle"></i>
 	<ul class="nav"> 
 		<li>
@@ -42,7 +55,7 @@ include('php/connect.php');
 		</li>
 		
 		<li><a href="#">
-			<i class="fa fa-user"style="font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
+			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
 		       <li><a href="MyProfile.php">My profile</a></li>
 		       <li><a href="#">Settings</a></li>
@@ -52,6 +65,24 @@ include('php/connect.php');
 	</ul>
 </header>
 	<!-- Main -->
+	<div class="wrapper">
+	   <!-- main content -->
+		<form action="php/UpdateInformation.php" method="POST">
+			<fieldset class="fieldset" >
+				<legend class="legend">Personal information:</legend>
+				<p> If you would like to update your information, please enter any changes and submit. <p><br>
+				<a> First name: </a><br>
+				<input id = "firstname" type="text" name="firstname"><br>
+				Last name:<br>
+				<input id = "lastname" type="text" name="lastname"><br>
+				Email Address:<br>
+				<input id = "email" type="email" name="email"><br><br>
+				Password - <br> Every password must be at least 6 characters and contain at least 1 number, upper and lowercase letter: <br>
+				<input id = "password" type="text" name="password"><br><br>
+				<input type="submit" value="Submit">
+			</fieldset>
+		</form>
+	</div>
 <main>
 	<div class="content-box">
 		
