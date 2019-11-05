@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include('php/session.php');
-	include('php/connect.php');
+	include('../php/session.php');
+	include('../php/connect.php');
 
 ?>
 <html>
@@ -21,11 +21,11 @@
     <link rel="stylesheet" type="text/css" href="css/ClassInfo.css">
     
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-    <link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+    <link rel="stylesheet" href="../css/Side_Main_sheet.css">
 	
 	<!-- Insert javascript Modal link-->
-	<script src="js/Modal_popup.js"></script>
+	<script src="../js/Modal_popup.js"></script>
 	
 	<style>
 		table {
@@ -84,7 +84,7 @@
 	</ul>
 	<!-- The Modal for Create Quiz -->
 	<div id="myModal0" class="modal">
-			<form action="php/CreateQuiz.php" class="form-container" method="POST">
+			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
 				<h2>Create Quiz</h2>
 					<p>Enter the title of the quiz here.</p>
 					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
@@ -102,9 +102,9 @@
  <div class="wrapper">
         <div class="sidebar">
 		<ul>
-         		<li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
-				<li class="active"><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
-          		<li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li> 
+         		<li><a href="TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
+				<li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
+          		<li class="active"><a href="QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li> 
        		</ul>
        </div>
 		<!--Main content here -->
@@ -113,29 +113,25 @@
 				<thead>
 					<tr>
 					  <th>#</th>
-					  <th style="width: 450px;">First Name</th>
-					  <th style="width: 450px;">Last Name</th>
-					  <th style="width: 450px;">Username</th>
+					  <th style="width: 450px;">Quiz Name</th>
+					  <th style="width: 450px;">Description</th>
 					</tr>
 			  </thead>
 			  <tbody>
 				  <?php 
-					$classcode= $_SESSION['class_code'];
-					$query= "SELECT distinct e.student_id, u.firstname,u.lastname FROM enrollment e, users u WHERE e.class_code = '$classcode' AND e.student_id = u.username"; 
+					$class_id= $_SESSION['class_id'];
+					$query= "SELECT distinct q.quiz_name, q.quiz_description FROM quizzes q WHERE q.class_id = '$class_id'"; 
 					$query_run = $conn->query($query);
 					$count = 0;
 					while($row= mysqli_fetch_array($query_run)){
 						$count++;
-						$stu_first = $row['firstname'];
-						$stu_last = $row['lastname'];
-						$stu_id = $row['student_id'];
-					
+						$q_name = $row['quiz_name'];
+						$q_desp = $row['quiz_description'];
 					?>
 						<tr>
 						  <th scope="row"><?php echo $count; ?></th>
-						  <td><?php echo $stu_first; ?></td>
-						  <td><?php echo $stu_last; ?></td>
-						  <td><?php echo $stu_id; ?></td>
+						  <td><?php echo $q_name; ?></td>
+						  <td><?php echo $q_desp; ?></td>
 						</tr>
 					<?php
 					}

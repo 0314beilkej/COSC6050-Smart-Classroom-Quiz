@@ -98,10 +98,10 @@ if ($conn->connect_error) {
 				//redirect to appropriate homescreen
 				if ($row["role"] == "Teacher") {
 					echo ("<script>alert('Your account has been successfully created. Click OK to view your homepage.')</script>");
-					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 				} else {
 					echo ("<script>alert('Your account has been successfully created. Click OK to view your homepage.')</script>");
-					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/StudentHome.php';</script>");
+					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentHome.php';</script>");
 			}
 			}
 		} else {

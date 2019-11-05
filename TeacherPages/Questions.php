@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include('php/session.php');
-	include('php/connect.php');
+	include('../php/session.php');
+	include('../php/connect.php');
 
 ?>
 <html>
@@ -17,15 +17,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
     
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-    <link rel="stylesheet" href="css/Side_Main_sheet.css">
-    <link rel="stylesheet" href="css/Questions_style.css">
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+    <link rel="stylesheet" href="../css/Side_Main_sheet.css">
+    <link rel="stylesheet" href="../css/Questions_style.css">
 
     <!--bootstrap-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    
 	<!-- Insert javascript Modal link-->
-    <script src="js/Modal_popup.js"></script>
+    <script src="../js/Modal_popup.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -50,7 +50,7 @@
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
 			<ul style="left: 0px; z-index: 100;">
-				<li><a href="/CreateQuiz.html">Create Quiz</a></li>
+				<li><a href="../php/CreateQuiz.html">Create Quiz</a></li>
 			</ul>
 		</li>
 		
@@ -64,7 +64,7 @@
 	</ul>
 	<!-- The Modal for create class -->
 	<div id="myModal" class="modal">
-			<form action="php/CreateClass.php" class="form-container" method="POST">
+			<form action="../php/CreateClass.php" class="form-container" method="POST">
 				<h2>Create class</h2>
 					<input id="classname" name="classname" placeholder="Class Name" type="text" required>
 					<input id="instructorID" name="instructorID" placeholder="Instructor ID" type="text" required>

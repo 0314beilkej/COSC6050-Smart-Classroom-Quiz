@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include('php/session.php');
-	include('php/connect.php');
+	include('../php/session.php');
+	include('../php/connect.php');
 
 	// Get class id from URI
 	$URI = $_SERVER['REQUEST_URI'];
@@ -38,7 +38,7 @@
     
 
 	<!-- Insert javascript Modal link-->
-	<script src="js/Modal_popup.js"></script>
+	<script src="../js/Modal_popup.js"></script>
 
 	<title>Teacher's Class</title>
 </head>
@@ -69,14 +69,14 @@
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
-		       <li><a href="MyProfile.php">My profile</a></li>
-		       <li><a href="php/logout.php">Logout</a></li>
+		       <li><a href="../MyProfile.php">My profile</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>
 	<!-- The Modal for Create Quiz -->
 	<div id="myModal0" class="modal">
-			<form action="php/CreateQuiz.php" class="form-container" method="POST">
+			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
 				<h2>Create Quiz</h2>
 					<p>Enter the title of the quiz here.</p>
 					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
@@ -97,7 +97,7 @@
 			<li  class="active"><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 			<li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
 			<li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li>
-			<!-- <li><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li> -->
+			<li><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li> 
         </ul>
        </div>
 		<!--Main content here -->

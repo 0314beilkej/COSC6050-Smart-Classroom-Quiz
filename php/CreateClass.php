@@ -3,12 +3,6 @@ include('GetClassCode.php');
 include 'connect.php';
 session_start();
 
-/* $servername = "localhost";
-$DBusername = "quizuser";
-$DBpassword = "classquiz";
-$DBname = "quiz";
-// Create connection
-$conn = new mysqli($servername, $DBusername, $DBpassword, $DBname); */
 
 // Check connection
 if ($conn->connect_error) {

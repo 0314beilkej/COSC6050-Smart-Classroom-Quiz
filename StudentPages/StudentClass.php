@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include ('php/connect.php');
-	include('php/session.php');
+	include ('./php/connect.php');
+	include('./php/session.php');
 
 
 	// Get class id from URI
@@ -28,11 +28,11 @@
 	<link href="https://fonts.googleapis.com/css?family=Candal|Lora&display=swap" rel="stylesheet">
 	
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-	<link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="./css/HeaderSheet.css">
+	<link rel="stylesheet" href="./css/Side_Main_sheet.css">
 
 	<!-- Insert javascript Modal link-->
-	<script src="js/Modal_popup.js"></script>
+	<script src="./js/Modal_popup.js"></script>
 
 	<title>Student's Class</title>
 </head>
@@ -57,9 +57,9 @@
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
-		       <li><a href="MyProfile.php">My profile</a></li>
+		       <li><a href="../MyProfile.php">My profile</a></li>
 		       <li><a href="#">Settings</a></li>
-		       <li><a href="php/logout.php">Logout</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>

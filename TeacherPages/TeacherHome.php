@@ -1,6 +1,6 @@
 <?php
-include('php/session.php');
-include('php/connect.php');
+include('../php/session.php');
+include('../php/connect.php');
 ?>
 <html>
 <head>
@@ -13,11 +13,11 @@ include('php/connect.php');
 	<link href="https://fonts.googleapis.com/css?family=Candal|Lora&display=swap" rel="stylesheet">
 	
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-	<link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+	<link rel="stylesheet" href="../css/Side_Main_sheet.css">
 
 	<!-- Insert javascript Modal link-->
-	<script src="js/Modal_popup.js"></script>
+	<script src="../js/Modal_popup.js"></script>
 	
 	<title>Teacher's Homepage</title>
 </head>
@@ -39,14 +39,14 @@ include('php/connect.php');
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $name;?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
-		       <li><a href="MyProfile.php">My profile</a></li>
-		       <li><a href="php/logout.php">Logout</a></li>
+		       <li><a href="../MyProfile.php">My profile</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>	
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
-		<form action="php/CreateClass.php" class="form-container" method="POST">
+		<form action="../php/CreateClass.php" class="form-container" method="POST">
 			<h2>Create class</h2>
 				<input id="classname" name="classname" placeholder="Class Name" type="text" required>
 				<select id="subject" name="subject" required>
@@ -78,7 +78,7 @@ include('php/connect.php');
 		{
 			$classname = $row["classname"];
 			$class_id = $row["class_id"];
-			$img = "images/class_images/" . $row["image"];
+			$img = "../images/class_images/" . $row["image"];
 		?>
 			<div class="content-img">
 				<a href="TeacherClass.php?id=<?php echo $class_id?>" >

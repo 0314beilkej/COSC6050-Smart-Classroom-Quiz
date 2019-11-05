@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 		if ($result > 0) {
 			$valid = false;
 			echo("<script>alert('There is already a quiz associated with ".$quizname.". Try creating a quiz with another name.')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherClass.php';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherClass.php';</script>");
 		}
 	}
 
@@ -39,11 +39,11 @@ if ($conn->connect_error) {
 		$newSQL = "insert into quizzes (quiz_name, quiz_description, instructor_id, time_limit, num_questions, num_answer, max_attempt, class_id) values ('$quizname', '$quizdescription', '$username', 10, 10, 10, 10, '$classid')";
 		if ($conn->query($newSQL) === TRUE) {
 			echo ("<script>alert('New quiz created successfully!')</script>");
-			echo ("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/NewQuiz.php';</script>");
+			echo ("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/NewQuiz.php';</script>");
 		} else {
 			//echo "Error: " . $sql . "<br>" . $conn->error;
 			echo("<script>alert('Error creating quiz')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherClass.php';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherClass.php';</script>");
 		}
     }
 }

@@ -21,9 +21,9 @@ if ($conn->connect_error) {
 				$_SESSION['username'] = $username;
 				if ($row["role"] == "Teacher") {
 					//header('Location: https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php');
-					header('Location: ../TeacherHome.php');
+					header('Location: ../TeacherPages/TeacherHome.php');
 				} else {
-					header('Location: https://pascal.mscsnet.mu.edu/quiz/StudentHome.php');
+					header('Location: https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentHome.php');
 				}
 			}
 		} else {
