@@ -12,6 +12,10 @@ if ($conn->connect_error) {
 	// Get form data 
 	$classname = filter_input(INPUT_POST, 'classname');
     $subject = $_POST['subject'];
+	
+	// Insert escape characters into strings that include single quotes
+	$classname = str_replace("'", "\'", $classname);
+	
 	// Ensure that the account can be added.  
 	$valid = TRUE;
 	$username = $_SESSION['username'];

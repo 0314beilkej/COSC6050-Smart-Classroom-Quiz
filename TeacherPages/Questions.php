@@ -5,8 +5,10 @@
 	
 	// Get quiz id from URI
 	$URI = $_SERVER['REQUEST_URI'];
-	$quiz_id = substr($URI, 36);
-	
+	//$quiz_id = substr($URI, 36);
+	$quiz_id = $_GET['id'];
+	$_SESSION['quiz_id'] = $quiz_id;
+
 ?>
 <html>
 <head>
@@ -33,6 +35,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</script>
+	
+	<!-- Scripts for passing info to modals -->
+	 <script type="text/javascript">
+		$( document ).ready(function() {
+			 $('.delete').click(function (e) {
+				e.preventDefault();
+				var link = this;
+				var deleteModal = $("#deleteQuestionModal");
+				// store the ID inside the modal's form
+				deleteModal.find('input[name=id]').val(this.dataset.id);
+			});
+		});
+    </script>
+	
     <title>Questions</title>
 </head>
 <body>
@@ -42,7 +58,7 @@
 		<h1 class="log-text">MarQuiz</h1>
 		<h4>
 		<a class= "class_name" href="#0">
-		<i class="fas fa-grip-vertical" style="color:#E6E6FA"></i>&nbsp <?php echo $_SESSION['classname']?></a>
+		<i class="fas fa-grip-vertical" style="color:#E6E6FA"></i>&nbsp <?php echo $_SESSION['classname'];?></a>
 		</h4>
 	</div>
 	
@@ -126,31 +142,35 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th style="width:400px;">Questions</th>
-                                <th style="width:400px;">Answers</th>
+                                <th style="width:400px;">Question</th>
+                                <th style="width:400px;">Correct Answer</th>
                                 <th style="width:400px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
 							<?php 
 								if ($quiz_id == "") {
-									$question_query = "select a.ques_name from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+									$question_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+									//$question_query = "select a.question, a.correct_answer from questions_2 a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
 								} else {
-									$question_query = "select ques_name from questions where quiz_id = '$quiz_id'";
+									$question_query = "SELECT question_id, question, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer from questions where quiz_id = '$quiz_id'";
+									//$question_query = "select question, correct_answer from questions_2 where quiz_id = '$quiz_id'";
 								}
 								$count = 0;
 								$query_run = $conn->query($question_query);
 								while($row = mysqli_fetch_array($query_run)){
 										$count = $count+1;
-										$row_ques_name = $row['ques_name'];
+										$row_question = $row['question'];
+										$row_answer = $row['answer'];
+										$row_question_id = $row['question_id'];
 							?>
 								<tr>
 									<td><?php echo $count; ?></td>
-									<td><?php echo $row_ques_name; ?></td>
-									<td>Answer A</td>
+									<td><?php echo $row_question; ?></td>
+									<td><?php echo $row_answer; ?></td>
 									<td>
 										<a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-										<a href="#deleteQuestionModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 									</td>
 								</tr>
 							<?php
@@ -161,8 +181,8 @@
                 </div>
             </div>
             <!-- Add Modal HTML -->
-            <div id="addQuestionModal" class="modal">
-                    <form action="" class="form-container" method="POST">
+           <div id="addQuestionModal" class="modal">
+                    <form action="../php/CreateQuestion.php" class="form-container" method="POST">
                         <h2>Add a new question</h2>
                         <br>
                             <textarea rows="2" placeholder="Enter the question here" name="q_name" ></textarea>
@@ -180,23 +200,25 @@
                             <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
                             <input type="submit" class="btn" value="Add">
                     </form>
-            </div>
+            </div> 
+			
+			
             <!-- Edit Modal HTML -->
             <div id="editQuestionModal" class="modal">
                     <form action="" class="form-container" method="POST">
                             <h2>Edit the question</h2>  
                             <br>
                                 <textarea rows="2" placeholder="Enter the question here" name="q_name" ></textarea>
-                                <textarea rows="2" placeholder="Enter Answer (A)" name="opt_1" ></textarea>
-                                <textarea rows="2" placeholder="Enter Answer (B)" name="opt_2" ></textarea>
-                                <textarea  rows="2" placeholder="Enter Answer (C)" name="opt_3" ></textarea>
-                                <textarea  rows="2" placeholder="Enter Answer (D)" name="opt_4" ></textarea>
+                                <textarea rows="2" placeholder="Enter Answer (A)" name="ans1" ></textarea>
+                                <textarea rows="2" placeholder="Enter Answer (B)" name="ans2" ></textarea>
+                                <textarea  rows="2" placeholder="Enter Answer (C)" name="ans3" ></textarea>
+                                <textarea  rows="2" placeholder="Enter Answer (D)" name="ans4" ></textarea>
                                 <select name="true_ans" required>
                                             <option name="">--Correct Answer--</option>
-                                            <option name= "A">A</option>
-                                            <option name= "B">B</option>
-                                            <option name= "C">C</option>
-                                            <option name= "D">D</option>
+                                            <option name= "ans1">A</option>
+                                            <option name= "ans2">B</option>
+                                            <option name= "ans3">C</option>
+                                            <option name= "ans4">D</option>
                                 </select>
                                 <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
                                 <input type="submit" class="btn" value="Edit">
@@ -205,12 +227,13 @@
             </div>
             <!-- Delete Modal HTML -->
             <div id="deleteQuestionModal" class="modal">
-                <form class="form-container">
+                <form action = "../php/DeleteQuestion.php" method="GET" class="form-container">
                     <br>
                     <h4>Delete Question</h4>
                     <br>					
-                    <p>Are you sure you want to delete these Record?</p>
+                    <p>Are you sure you want to delete this question?</p>
                     <br>
+					<input type="hidden" name="id" value="" />
                     <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn" value="Delete">
                 </form>

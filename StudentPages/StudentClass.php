@@ -89,26 +89,41 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th style="width:422px;">Quiz Name</th>
-                            <th style="width:122px;">Deadline</th>
-							<th style="width:122px;">Duration</th>
+                            <th style="width:322px;">Quiz Name</th>
+							<th style="width:122px;">Duration (min)</th>
 							<th style="width:122px;">Questions</th>
 							<th style="width:122px;">Attempts</th>
-							<th style="width:222px;">Status</th>
+							<th style="width:322px;">Status</th>
 							<th style="width:322px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+					<?php 
+					$classcode= $_SESSION['class_code'];
+					$class_id= $_SESSION['class_id'];
+					$query= "SELECT a.class_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					$query_run = $conn->query($query);
+					$count = 0;
+					while($row1= mysqli_fetch_array($query_run)){
+						$count++;
+						$quiz_name = $row1['quiz_name'];
+						$quiz_time = $row1['time_limit'];
+						$quiz_ques = $row1['num_questions'];
+						$quiz_atmpt = $row1['max_attempt'];
+					
+					?>
                         <tr>
-                            <td>1</td>
-                            <td>quiz #1</td>
-							<td>11-18-2019</td>
-							<td>5 mins</td>
-							<td>5</td>
-							<td>Attempt#1</td>
+                            <td scope="row"><?php echo $count; ?></td>
+                            <td><?php echo $quiz_name; ?></td>
+							<td><?php echo $quiz_time; ?></td>
+							<td><?php echo $quiz_ques; ?></td>
+							<td><?php echo $quiz_atmpt; ?></td>
 							<td>Active</td>
 							<td><a href="./TakeQuiz.php" class="button">Take Quiz</a></td>
                         </tr>
+						<?php
+					}
+					?>
                     </tbody>
                 </table>
             </div>

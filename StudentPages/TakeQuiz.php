@@ -65,7 +65,7 @@
     </header> 
 	<div id="container">
                 <h1> Quiz is Starting </h1>
-				<p>00:00</p>
+				<p>Time left <b>00:00</b></p>
 				<hr style="border-top: dotted 1px;" /><br>
             <section>
 				<form action="grade.php" method="post" id="results">
