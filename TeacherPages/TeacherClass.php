@@ -5,7 +5,7 @@
 
 	// Get class id from URI
 	$URI = $_SERVER['REQUEST_URI'];
-	$class_id = substr($URI, 26);
+	$class_id = substr($URI, 39);
 	$result = $conn->query("select * from class where class_id = '$class_id'");
 	$row = $result-> fetch_assoc();
 	
@@ -30,11 +30,11 @@
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,200,400,500,600" rel="stylesheet" type="text/css">
 	
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-    <link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+    <link rel="stylesheet" href="../css/Side_Main_sheet.css">
     <!--bootstrap-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/ClassInfo.css">
+    <link rel="stylesheet" type="text/css" href="../css/ClassInfo.css">
     
 
 	<!-- Insert javascript Modal link-->
@@ -57,7 +57,7 @@
 	<i class="fa fa-bars menu-toggle"></i>
 	<ul class="nav"> 
 		<li>
-			<a href="TeacherHome.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
+			<a href="./TeacherHome.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>

@@ -2,7 +2,7 @@
 	session_start();
 	include('../php/session.php');
 	include('../php/connect.php');
-
+	
 ?>
 <html>
 <head>
@@ -18,7 +18,7 @@
 	
     <!--bootstrap-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/ClassInfo.css">
+    <link rel="stylesheet" type="text/css" href="../css/ClassInfo.css">
     
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="../css/HeaderSheet.css">
@@ -77,8 +77,8 @@
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul style="	z-index: 100; ">
-		       <li><a href="MyProfile.php">My profile</a></li>
-		       <li><a href="php/logout.php">Logout</a></li>
+		       <li><a href="../MyProfile.php">My profile</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -104,7 +104,8 @@
 		<ul>
          		<li><a href="TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 				<li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
-          		<li class="active"><a href="QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li> 
+          		<li class="active"><a href="QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li>
+				<li><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li> 				
        		</ul>
        </div>
 		<!--Main content here -->
@@ -113,25 +114,37 @@
 				<thead>
 					<tr>
 					  <th>#</th>
-					  <th style="width: 450px;">Quiz Name</th>
-					  <th style="width: 450px;">Description</th>
+						<th style="width: 225px;">Quiz Name</th>
+						<th style="width: 500px;">Description</th>
+						<th style="width: 300px;">Time Limit (min)</th>
+						<th style="width: 300px;">Num. of Questions</th>
+						<th style="width: 300px;">Num. of Answers</th>
+						<th style="width: 300px;">Num. of Takes Left</th>
 					</tr>
 			  </thead>
 			  <tbody>
 				  <?php 
-					$class_id= $_SESSION['class_id'];
-					$query= "SELECT distinct q.quiz_name, q.quiz_description FROM quizzes q WHERE q.class_id = '$class_id'"; 
+					$class_id = $_SESSION['class_id'];
+					$query = "SELECT * FROM quizzes q WHERE q.class_id = '$class_id'"; 
 					$query_run = $conn->query($query);
 					$count = 0;
 					while($row= mysqli_fetch_array($query_run)){
 						$count++;
 						$q_name = $row['quiz_name'];
 						$q_desp = $row['quiz_description'];
+						$q_time = $row['time_limit'];
+						$q_quest = $row['num_questions'];
+						$q_ans = $row['num_answer'];
+						$q_takes = $row['max_attempt'];
 					?>
 						<tr>
 						  <th scope="row"><?php echo $count; ?></th>
 						  <td><?php echo $q_name; ?></td>
 						  <td><?php echo $q_desp; ?></td>
+						  <td><?php echo $q_time; ?></td>
+						  <td><?php echo $q_quest; ?></td>
+						  <td><?php echo $q_ans; ?></td>
+						  <td><?php echo $q_takes; ?></td>
 						</tr>
 					<?php
 					}

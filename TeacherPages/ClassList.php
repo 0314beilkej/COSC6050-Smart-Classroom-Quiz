@@ -2,7 +2,6 @@
 	session_start();
 	include('../php/session.php');
 	include('../php/connect.php');
-
 ?>
 <html>
 <head>
@@ -21,8 +20,8 @@
     <link rel="stylesheet" type="text/css" href="css/ClassInfo.css">
     
 	<!-- Material Kit CSS -->
-	<link rel="stylesheet" href="css/HeaderSheet.css">
-    <link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+    <link rel="stylesheet" href="../css/Side_Main_sheet.css">
 	
 	<!-- Insert javascript Modal link-->
 	<script src="../js/Modal_popup.js"></script>
@@ -65,7 +64,7 @@
 	<i class="fa fa-bars menu-toggle"></i>
 	<ul class="nav"> 
 		<li>
-			<a href="TeacherHome.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
+			<a href="../TeacherPages/TeacherHome.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>

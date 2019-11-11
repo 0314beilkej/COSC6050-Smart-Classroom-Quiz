@@ -14,11 +14,17 @@ if ($conn->connect_error) {
 } else {
 	$checkSQL = "SELECT * from users where username = '$username'";
 	$result = $conn->query($checkSQL);
+	//$checkSQL2 = "SELECT * from class where instructor_id = '$username'";
+	//$result2 = $conn->query($checkSQL2);
+	
 	while ($row = $result-> fetch_assoc()){
 		$name = $row['firstname'] ." ". $row['lastname']." ";
 	$_SESSION['name'] = $name;
 	$_SESSION['role'] = $row['role'];
-	}  
+	$_SESSION['email'] = $row['email'];
+	}
+	
+
 }
 
 // destroy the session 

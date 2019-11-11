@@ -35,7 +35,7 @@ if ($conn->connect_error) {
 		if ($result > 0) {
 			$valid = false;
 			echo("<script>alert('There is already a class associated with ".$classname.". Try create a class with another class name.')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 		}
 	}
 
@@ -44,10 +44,10 @@ if ($conn->connect_error) {
 		$newClassSQL = "insert into class (classname, class_code, subject, instructor_id) values ('$classname', '$classcode', '$subject', '$username')";
 		if ($conn->query($newClassSQL) === TRUE) {
 			echo("<script>alert('New class created successfully! Class Code: ".$classcode."')</script>");
-            echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+            echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 		} else {
-			//echo "Error: " . $sql . "<br>" . $conn->error;
-            echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php';</script>");
+			echo "Error: " . $sql . "<br>" . $conn->error;
+            //echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 
 		}
     }

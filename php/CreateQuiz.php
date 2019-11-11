@@ -1,5 +1,6 @@
 <?php
 include 'connect.php';
+include 'TeacherClass.php';
 //include 'CreateClass.php';
 
 session_start();
@@ -15,7 +16,6 @@ if ($conn->connect_error) {
 	// Ensure that the account can be added.  
 	$valid = TRUE;
 	$username = $_SESSION['username'];
-	$classname = $_SESSION['classname'];
 	$classid = $_SESSION['class_id'];
 	
 	// Check if a quizname exists
@@ -31,15 +31,12 @@ if ($conn->connect_error) {
 
 	// If the data information is valid, insert into quizzes table
 	if ($valid === TRUE) {
-		
-		//I believe the error lies in leaving certain MySQL fields blank.
-		/* 		$getclassidSQL = "SELECT class_id from class where classname = '$classname'";
-		$result = $conn->query($getclassidSQL);
-		while ($row = $result-> fetch_assoc()) { */
+		var_dump ($classid);
+		echo $username;
 		$newSQL = "insert into quizzes (quiz_name, quiz_description, instructor_id, time_limit, num_questions, num_answer, max_attempt, class_id) values ('$quizname', '$quizdescription', '$username', 10, 10, 10, 10, '$classid')";
 		if ($conn->query($newSQL) === TRUE) {
 			echo ("<script>alert('New quiz created successfully!')</script>");
-			echo ("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/NewQuiz.php';</script>");
+			echo ("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/Questions.php';</script>");
 		} else {
 			//echo "Error: " . $sql . "<br>" . $conn->error;
 			echo("<script>alert('Error creating quiz')</script>");

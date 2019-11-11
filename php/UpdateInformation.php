@@ -13,8 +13,8 @@ if ($conn->connect_error) {
 	$email	= filter_input(INPUT_POST, 'email');
 	$newusername	= filter_input(INPUT_POST, 'username');
 	$password	= filter_input(INPUT_POST, 'password');
+	$confpassword = filter_input(INPUT_POST, 'confpassword');
 	$username = $_SESSION['username'];
-	$existingemail = $_SESSION['email_form'];
 	
 	
 	// Ensure that the account can be added.  
@@ -38,21 +38,21 @@ if ($conn->connect_error) {
 			}
 		}
 		if(!empty($email)){
-			$checkSQL = "SELECT email from users where email = '$existingemail'";
+			$checkSQL = "SELECT email from users where email = '$email'";
 			$result = $conn->query($checkSQL)->num_rows;
 			if ($result > 0) {
 				$valid = false;
 				echo("<script>alert('There is already an account associated with ".$email.". Try updating with another email address.')</script>");
 				echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
-			}
-			if (mysqli_query($conn, $updateemailSQL)) {
+				
+			} elseif (mysqli_query($conn, $updateemailSQL)) {
 			}
 		}
 		if(!empty($password)){
 			if (strlen($password) < 6){
-			$valid = false;
-			echo ("<script>alert('Your Password Must Contain At Least 6 Characters!')</script>");
-			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
+				$valid = false;
+				echo ("<script>alert('Your Password Must Contain At Least 6 Characters!')</script>");
+				echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
 
 			} elseif (!preg_match("#[0-9]+#",$password)) {
 				$valid = false;
@@ -68,10 +68,16 @@ if ($conn->connect_error) {
 				$valid = false;
 				echo ("<script>alert('Your Password Must Contain At Least 1 Lowercase Letter!')</script>");
 				echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
-			}
-			if (mysqli_query($conn, $updatepasswordSQL)) {
+			
+			} elseif ($password !== $confpassword) {
+				$valid = false;
+				echo ("<script>alert('Passwords do not match!')</script>");
+				echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");		
+	
+			} elseif (mysqli_query($conn, $updatepasswordSQL)) {
 			}
 		}
+		
 		echo("<script>alert('Information updated successfully!') </script>");
 		echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
 	}

@@ -2,7 +2,11 @@
 	session_start();
 	include('../php/session.php');
 	include('../php/connect.php');
-
+	
+	// Get quiz id from URI
+	$URI = $_SERVER['REQUEST_URI'];
+	$quiz_id = substr($URI, 36);
+	
 ?>
 <html>
 <head>
@@ -28,7 +32,7 @@
     <script src="../js/Modal_popup.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	</script>
     <title>Questions</title>
 </head>
 <body>
@@ -49,38 +53,32 @@
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
-			<ul style="left: 0px; z-index: 100;">
-				<li><a href="../php/CreateQuiz.html">Create Quiz</a></li>
+			<ul style="left: 0px;">
+				<li><a href="#" onclick="ClickCreate()">Create Quiz</a></li>
 			</ul>
 		</li>
 		
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul style="	z-index: 100; ">
-		       <li><a href="MyProfile.php">My profile</a></li>
-		       <li><a href="php/logout.php">Logout</a></li>
+		       <li><a href="../MyProfile.php">My profile</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>
-	<!-- The Modal for create class -->
-	<div id="myModal" class="modal">
-			<form action="../php/CreateClass.php" class="form-container" method="POST">
-				<h2>Create class</h2>
-					<input id="classname" name="classname" placeholder="Class Name" type="text" required>
-					<input id="instructorID" name="instructorID" placeholder="Instructor ID" type="text" required>
-					<select id="subject" name="subject" required>
-						<option name="">--Subject--</option>
-      						<option name="Bioinformatics" value="Bioinformatics">Bioinformatics</option>
-      						<option name="Biology" value="Biology">Biology</option>
-						<option name="Business Administration" value="Business Administration">Business Administration</option>
-						<option name="Computing" value="Computing">Computing</option>
-						<option name="Mathematics" value="Mathematics">Mathematics</option>
-					</select>
-					<button type="submit" name="btn create" class="btn"  id="submit">Create</button>
-					<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm()">Cancel</button>
+	<!-- The Modal for Create Quiz -->
+	<div id="myModal0" class="modal">
+			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+				<h2>Create Quiz</h2>
+					<p>Enter the title of the quiz here.</p>
+					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
+					<p>Give a quick description for the quiz (less than 100 characters).</p>
+					<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" required>
+					<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
+					<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
 			</form>
-	</div>
-	<!--End of the Modal-->
+		</div>
+	<!--End of the Modal-->	
 		
 	</header>
 	<!-- Sidebar here -->
@@ -90,7 +88,7 @@
 		<ul>
           <li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 	      <li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
-          <li><a href="./QuizList.html"><i class="fas fa-list"></i>Quizzes</a></li>
+          <li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li>
 	       <li class="active"><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li>  
         </ul>
        </div>
@@ -102,10 +100,24 @@
                             <div class="col-sm-6">
                                 <div class="form-group col-md-4">
                                         <label>Select Quiz name: </label>&nbsp
-                                        <select name="quizname" class="form-control" maxlength="20" required>
-                                            <option name= "quiz1">quiz #</option>
-                                        </select>
-                                        <a href="#addQuestionModal" class="btn" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add Question</span></a>
+										<select name="quiz_id" class="form-control" maxlength="20" onchange="location = this.value"required>
+											<option value= "Questions.php">All Quizzes</option>
+											<?php 
+												// list all quizzes for the teacher and class
+												$instructor_id = $_SESSION['username'];
+												$class_id = $_SESSION['class_id'];
+												$query = "select quiz_name, quiz_id from quizzes where instructor_id = '$instructor_id' and class_id ='$class_id'";
+												$query_run = $conn->query($query);
+												while($row = mysqli_fetch_array($query_run)){
+													$row_quiz_name = $row['quiz_name'];
+													$row_quiz_id = $row['quiz_id'];
+											?>
+												<option value= "Questions.php?id=<?php echo $row_quiz_id; ?>" <?php if ($row_quiz_id == $quiz_id) { echo "selected";}?>><?php echo $row_quiz_name; ?></option>
+											<?php 
+												}
+											?>
+										</select>
+                                        <a href="#addQuestionModal" class="btn" data-toggle="modal" <?php if ($quiz_id == "") {echo 'style="visibility: hidden;"';} ?>><i class="material-icons">&#xE147;</i> <span>Add Question</span></a>
                                 </div>
                             </div>
                         </div>
@@ -115,20 +127,35 @@
                             <tr>
                                 <th>#</th>
                                 <th style="width:400px;">Questions</th>
-                                <th style="width:400px;">Answer</th>
+                                <th style="width:400px;">Answers</th>
                                 <th style="width:400px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>what is....?</td>
-                                <td>Answer A</td>
-                                <td>
-                                    <a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#deleteQuestionModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                </td>
-                            </tr>
+							<?php 
+								if ($quiz_id == "") {
+									$question_query = "select a.ques_name from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+								} else {
+									$question_query = "select ques_name from questions where quiz_id = '$quiz_id'";
+								}
+								$count = 0;
+								$query_run = $conn->query($question_query);
+								while($row = mysqli_fetch_array($query_run)){
+										$count = $count+1;
+										$row_ques_name = $row['ques_name'];
+							?>
+								<tr>
+									<td><?php echo $count; ?></td>
+									<td><?php echo $row_ques_name; ?></td>
+									<td>Answer A</td>
+									<td>
+										<a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+										<a href="#deleteQuestionModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+									</td>
+								</tr>
+							<?php
+								}
+							?>
                         </tbody>
                     </table>
                 </div>

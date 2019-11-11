@@ -81,7 +81,7 @@ include('../php/connect.php');
 			$img = "../images/class_images/" . $row["image"];
 		?>
 			<div class="content-img">
-				<a href="TeacherClass.php?id=<?php echo $class_id?>" >
+				<a href="./TeacherClass.php?id=<?php echo $class_id?>" >
 					<img src=<?php echo $img?> width= "270px" height="195px"/> 
 					<h2 class="content-title"> <?php echo $classname?> </h2>
 				</a>

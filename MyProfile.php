@@ -45,9 +45,11 @@ include('php/connect.php');
 				<?php 
 					$user_role = $_SESSION['role'];
 					If ($user_role === "Student")
-						echo "StudentHome.php";
+					  //header("Location: StudentHome.php");
+						echo ("StudentPages/StudentHome.php");
 					else if ($user_role === "Teacher")
-						echo "TeacherHome.php";
+						// header("Location: TeacherHome.php");
+						echo ("TeacherPages/TeacherHome.php");
 					else
 						echo "#";
 				?>
@@ -58,8 +60,7 @@ include('php/connect.php');
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul>
 		       <li><a href="MyProfile.php">My profile</a></li>
-		       <li><a href="#">Settings</a></li>
-		       <li><a href="https://pascal.mscsnet.mu.edu/quiz/">Logout</a></li>
+		       <li><a href="php/logout.php">Logout</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -79,7 +80,22 @@ include('php/connect.php');
 				<input id = "email" type="email" name="email"><br><br>
 				Password - <br> Every password must be at least 6 characters and contain at least 1 number, upper and lowercase letter: <br>
 				<input id = "password" type="text" name="password"><br><br>
-				<input type="submit" value="Submit">
+				Confirm Password: <br>
+				<input id = "confpassword" type="text" name="confpassword"><br><br>
+				<input type="submit" value="Submit"> <br><br>
+			</fieldset>
+		</form>
+		<form action="php/UpdateInformation.php" method="POST">
+			<fieldset class="fieldset" >
+				<!-- deleting your account -->
+                <h4>Deleting your Account</h4>
+                <br>					
+                <p>Are you sure you want to delete your account?</p>
+                <br>
+				<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
+				<input type="submit" class="btn" value="Delete">
+				
+				
 			</fieldset>
 		</form>
 	</div>
