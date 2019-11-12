@@ -44,7 +44,7 @@
 				var link = this;
 				var deleteModal = $("#deleteQuestionModal");
 				// store the ID inside the modal's form
-				deleteModal.find('input[name=id]').val(this.dataset.id);
+				deleteModal.find('input[name=id]').val(this.dataset.id2);
 			});
 		});
     </script>
@@ -170,7 +170,7 @@
 									<td><?php echo $row_answer; ?></td>
 									<td>
 										<a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>" data-id-2="15"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 									</td>
 								</tr>
 							<?php
@@ -233,7 +233,7 @@
                     <br>					
                     <p>Are you sure you want to delete this question?</p>
                     <br>
-					<input type="hidden" name="id" value="" />
+					<input type="button" name="id" value="id" />
                     <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn" value="Delete">
                 </form>

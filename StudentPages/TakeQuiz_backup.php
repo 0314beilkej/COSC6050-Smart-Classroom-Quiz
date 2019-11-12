@@ -2,12 +2,13 @@
 	session_start();
 	include('../php/connect.php');
 	include('../php/session.php');
+	include('../php/GenerateQuiz.php');
 	
 	// Get quiz id from URI
-	//$URI = $_SERVER['REQUEST_URI'];
+	$URI = $_SERVER['REQUEST_URI'];
 	//$quiz_id = substr($URI, 36);
-	//$quiz_id = $_GET['id'];
-	//$_SESSION['quiz_id'] = $quiz_id;
+	$quiz_id = $_GET['id'];
+	$_SESSION['quiz_id'] = $quiz_id;
 ?>
 
 <html>
@@ -104,45 +105,45 @@
 						$true_ans = $rows['true_ans'];	 */	
 						
 					// use GenerateQuiz function to populate questions
-					$count = 1;
+					GenerateQuiz($quiz_id);
 					
+					$count = 1;
 					foreach($_SESSION['question_ids'] as $index=>$cur_question_id){
 						
 						$question_query = "SELECT distinct question, question_id, ans_a, ans_b, ans_c, ans_d, true_ans FROM  questions WHERE question_id = '$cur_question_id'"; 
 						$question_run = $conn->query($question_query);
 						$question_row = mysqli_fetch_array($question_run);
-						$question = $question_row['question'];
-						$question_id = $question_row['question_id'];
-						$ans_a = $question_row['ans_a'];
-						$ans_b = $question_row['ans_b'];
-						$ans_c = $question_row['ans_c'];
-						$ans_d = $question_row['ans_d'];
-						$true_ans = $question_row['true_ans'];	
+						$question = $rows['question'];
+						$question_id = $rows['question_id'];
+						$ans_a = $rows['ans_a'];
+						$ans_b = $rows['ans_b'];
+						$ans_c = $rows['ans_c'];
+						$ans_d = $rows['ans_d'];
+						$true_ans = $rows['true_ans'];	
 						
 				?>
 					<ol>
 						<li>
-							<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
+							<h3><?php echo $count; ?>)&nbsp<?php echo $question; ?></h3>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="A" />
+								<input type="radio" name="ans1" id="ans" value="<?php echo $ans_a;?>" />
 								<label for="ans"><?php echo $ans_a; ?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="B" />
+								<input type="radio" name="ans2" id="ans" value="<?php echo $ans_b;?>" />
 								<label for="ans"><?php echo $ans_b;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="C" />
+								<input type="radio" name="ans3" id="ans" value="<?php echo $ans_c;?>" />
 								<label for="ans"><?php echo $ans_c;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="D" />
+								<input type="radio" name="ans4" id="ans" value="<?php echo $ans_d;?>" />
 								<label for="ans"><?php echo $ans_d;?></label>
 							</div>
 						</li>
 					</ol>
 				<?php
-					$count++;
 					}
 				?>
 				<br>

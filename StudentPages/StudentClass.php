@@ -101,7 +101,7 @@
 					<?php 
 					$classcode= $_SESSION['class_code'];
 					$class_id= $_SESSION['class_id'];
-					$query= "SELECT a.class_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					$query= "SELECT a.class_id, a.quiz_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
 					$query_run = $conn->query($query);
 					$count = 0;
 					while($row1= mysqli_fetch_array($query_run)){
@@ -110,6 +110,7 @@
 						$quiz_time = $row1['time_limit'];
 						$quiz_ques = $row1['num_questions'];
 						$quiz_atmpt = $row1['max_attempt'];
+						$quiz_id = $row1['quiz_id'];
 					
 					?>
                         <tr>
@@ -119,7 +120,7 @@
 							<td><?php echo $quiz_ques; ?></td>
 							<td><?php echo $quiz_atmpt; ?></td>
 							<td>Active</td>
-							<td><a href="./TakeQuiz.php" class="button">Take Quiz</a></td>
+							<td><a href="../php/GenerateQuiz.php?id=<?php echo $quiz_id;?>" class="button">Take Quiz</a></td>
                         </tr>
 						<?php
 					}

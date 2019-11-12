@@ -2,12 +2,12 @@
 	session_start();
 	include('../php/connect.php');
 	include('../php/session.php');
-	
+
 	// Get quiz id from URI
-	//$URI = $_SERVER['REQUEST_URI'];
+	$URI = $_SERVER['REQUEST_URI'];
 	//$quiz_id = substr($URI, 36);
-	//$quiz_id = $_GET['id'];
-	//$_SESSION['quiz_id'] = $quiz_id;
+	$quiz_id = $_GET['id'];
+	$_SESSION['quiz_id'] = $quiz_id;
 ?>
 
 <html>
@@ -58,13 +58,13 @@
                 <h1> Quiz is Starting </h1>
 			<!--Countdown Timer Code-->
 				<?php
+					$quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
 					$duration="";
-					$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id' AND a.quiz_id='$quiz_id'"; 
 					$res_run = $conn->query($res);
 					while($row1= mysqli_fetch_array($res_run)){
 					$duration = $row1['time_limit'];
-					$row_quiz_id = $row1['quiz_id'];
 						}
 					$_SESSION['time_limit'] = $duration;
 					$_SESSION['start_time'] = date("Y-m-d H:i:s");
@@ -85,11 +85,10 @@
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz.php" method="POST">
+			<form action="CheckResults.php" method="POST">
 				<?php 
-					/* $quiz_id= $_SESSION['quiz_id'];
-					$class_id = $_SESSION['class_id'];
-					$query= "SELECT distinct b.question_id, b.quiz_id, b.question, b.ans_a, b.ans_b, b.ans_c, b.ans_d, b.true_ans, c.class_id FROM  questions b, quizzes c WHERE c.class_id = '$class_id'"; 
+					$quiz_id= $_SESSION['quiz_id'];
+					$query= "SELECT distinct b.quiz_id, b.question_id, b.question, b.ans_a, b.ans_b, b.ans_c, b.ans_d, b.true_ans  FROM  questions b WHERE  b.quiz_id = '$quiz_id'"; 
 					$query_run = $conn->query($query);
 					$count = 0;
 					while($rows= mysqli_fetch_array($query_run))
@@ -101,48 +100,30 @@
 						$ans_b = $rows['ans_b'];
 						$ans_c = $rows['ans_c'];
 						$ans_d = $rows['ans_d'];
-						$true_ans = $rows['true_ans'];	 */	
-						
-					// use GenerateQuiz function to populate questions
-					$count = 1;
-					
-					foreach($_SESSION['question_ids'] as $index=>$cur_question_id){
-						
-						$question_query = "SELECT distinct question, question_id, ans_a, ans_b, ans_c, ans_d, true_ans FROM  questions WHERE question_id = '$cur_question_id'"; 
-						$question_run = $conn->query($question_query);
-						$question_row = mysqli_fetch_array($question_run);
-						$question = $question_row['question'];
-						$question_id = $question_row['question_id'];
-						$ans_a = $question_row['ans_a'];
-						$ans_b = $question_row['ans_b'];
-						$ans_c = $question_row['ans_c'];
-						$ans_d = $question_row['ans_d'];
-						$true_ans = $question_row['true_ans'];	
-						
+						$true_ans = $rows['true_ans'];			
 				?>
 					<ol>
 						<li>
-							<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
+							<h3><?php echo $count; ?>)&nbsp<?php echo $question; ?></h3>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="A" />
+								<input type="radio" name="ans1" id="ans" value="<?php echo $ans_a;?>" />
 								<label for="ans"><?php echo $ans_a; ?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="B" />
+								<input type="radio" name="ans2" id="ans" value="<?php echo $ans_b;?>" />
 								<label for="ans"><?php echo $ans_b;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="C" />
+								<input type="radio" name="ans3" id="ans" value="<?php echo $ans_c;?>" />
 								<label for="ans"><?php echo $ans_c;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans<?php echo $index; ?>" id="ans" value="D" />
+								<input type="radio" name="ans4" id="ans" value="<?php echo $ans_d;?>" />
 								<label for="ans"><?php echo $ans_d;?></label>
 							</div>
 						</li>
 					</ol>
 				<?php
-					$count++;
 					}
 				?>
 				<br>
