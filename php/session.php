@@ -14,8 +14,7 @@ if ($conn->connect_error) {
 } else {
 	$checkSQL = "SELECT * from users where username = '$username'";
 	$result = $conn->query($checkSQL);
-	//$checkSQL2 = "SELECT * from class where instructor_id = '$username'";
-	//$result2 = $conn->query($checkSQL2);
+	
 	
 	while ($row = $result-> fetch_assoc()){
 		$name = $row['firstname'] ." ". $row['lastname']." ";
@@ -23,8 +22,12 @@ if ($conn->connect_error) {
 	$_SESSION['role'] = $row['role'];
 	$_SESSION['email'] = $row['email'];
 	}
-	
 
+/* 	$checkSQL2 = "SELECT * from class where instructor_id = '$username'";
+	$result2 = $conn->query($checkSQL2);
+	while ($row2 = $result2->fetch_assoc()){
+		$_SESSION['class_id'] = $row2['class_id'];
+	} */
 }
 
 // destroy the session 

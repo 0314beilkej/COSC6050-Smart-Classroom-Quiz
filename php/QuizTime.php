@@ -11,14 +11,11 @@ $timesecond = strtotime ($to_time1);
 $differenceinseconds = $timesecond - $timefirst;
 
 $time_lapse = gmdate("i:s",$differenceinseconds); 
-if($time_lapse=='00:00')
-{  
+if($time_lapse=='00:00') {   
 unset(
         $_SESSION['start_time'],
-        $_SESSION['end_time']
-,
-        $_SESSION['time_limit']
-,
+        $_SESSION['end_time'],
+        $_SESSION['time_limit'],
 );
 echo "Time Out";
 }

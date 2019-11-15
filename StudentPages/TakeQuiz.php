@@ -2,10 +2,11 @@
 	session_start();
 	include('../php/connect.php');
 	include('../php/session.php');
+	include('../php/GenerateQuiz.php');
 	
 	// Get quiz id from URI
-	//$URI = $_SERVER['REQUEST_URI'];
-	//$quiz_id = substr($URI, 36);
+	$URI = $_SERVER['REQUEST_URI'];
+	$quiz_id = substr($URI, 36);
 	$quiz_id = $_GET['id'];
 	$_SESSION['quiz_id'] = $quiz_id;
 ?>
@@ -58,15 +59,15 @@
                 <h1> Quiz is Starting </h1>
 			<!--Countdown Timer Code-->
 				<?php
-					$quiz_id = $_SESSION['quiz_id'];
-					$class_id = $_SESSION['class_id'];
+					$quiz_id= $_SESSION['quiz_id'];
+					$class_id= $_SESSION['class_id'];
 					$duration="";
-					$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.quiz_id='$quiz_id'"; 
+					//$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id' AND a.quiz_id='$quiz_id'";
+					$res= "SELECT a.time_limit, a.quiz_id FROM quizzes a WHERE quiz_id='$quiz_id'";
 					$res_run = $conn->query($res);
 					while($row1= mysqli_fetch_array($res_run)){
-					$duration = $row1['time_limit'];
-					//$row_quiz_id = $row1['quiz_id'];
-						}
+						$duration = $row1['time_limit'];
+					}
 					$_SESSION['time_limit'] = $duration;
 					$_SESSION['start_time'] = date("Y-m-d H:i:s");
 					$end_time = date('Y-m-d H:i:s', strtotime('+'.$_SESSION['time_limit'].'minutes', strtotime($_SESSION['start_time'])));
@@ -74,19 +75,25 @@
 				?>
 				<b><h2 id="response"></h2></b>
 				<script type="text/javascript">
-					setInterval(function()
-					{
-						var xmlhttp=new XMLHttpRequest();
-						xmlhttp.open("GET","../php/QuizTime.php",false);
-						xmlhttp.send(null);
-						document.getElementById("response").innerHTML=xmlhttp.responseText;
-					},1000);
-				</script>
+					 var x = setInterval(fun1,1000);
+ 					 setTimeout('xx()',60000);
+ 					function fun1(){
+ 					var xmlhttp = new XMLHttpRequest();
+  					xmlhttp.open("GET","../php/QuizTime.php",false);
+ 					xmlhttp.send(null);
+  					var str = document.getElementById("response").innerHTML=xmlhttp.responseText;
+					}
+ 					function xx(){
+   					clearInterval(x);
+  					 window.location.href='../php/ScoreQuiz.php';
+ 				 }
+  				</script>		
 			<!--End of Countdown Timer Code-->
+
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz.php" method="POST">
+			<form action="../php/ScoreQuiz_Test.php" method="POST">
 				<?php 
 					/* $quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
@@ -123,22 +130,22 @@
 				?>
 					<ol>
 						<li>
-							<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
+						<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
 							<div>
-								<input type="radio" name="ans1" id="ans" value="<?php echo $ans_a;?>" />
-								<label for="ans"><?php echo $ans_a; ?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_a; ?>" />
+								<label>A)&nbsp;<?php echo $ans_a; ?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans2" id="ans" value="<?php echo $ans_b;?>" />
-								<label for="ans"><?php echo $ans_b;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_b; ?>" />
+								<label>B)&nbsp;<?php echo $ans_b;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans3" id="ans" value="<?php echo $ans_c;?>" />
-								<label for="ans"><?php echo $ans_c;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_c; ?>" />
+								<label>C)&nbsp;<?php echo $ans_c;?></label>
 							</div>
 							<div>
-								<input type="radio" name="ans4" id="ans" value="<?php echo $ans_d;?>" />
-								<label for="ans"><?php echo $ans_d;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_d; ?>" />
+								<label>D)&nbsp;<?php echo $ans_d;?></label>
 							</div>
 						</li>
 					</ol>
@@ -147,7 +154,7 @@
 					}
 				?>
 				<br>
-					<input type="submit" value="Submit Answers">
+					<input type="submit" name="submit" value="Submit Answers">
 			</form>				
 		</section>
 

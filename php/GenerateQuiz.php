@@ -23,6 +23,4 @@
 		$_SESSION['question_ids'][$question_count] = $question_row['question_id'];
 		$question_count++;
 	}
-	
-	echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/StudentPages/TakeQuiz.php';</script>");
 ?>

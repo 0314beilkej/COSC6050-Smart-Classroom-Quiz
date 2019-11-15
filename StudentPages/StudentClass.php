@@ -45,6 +45,15 @@
 	</script>
 
 	<title>Student's Class</title>
+
+	<!-- Script contains an alert message when clicking on Take Quiz Button-->
+	<script>
+ 		function showAlert() {
+    	var myText = "Be ready! The quiz will start now. If the time clock runs out, your quiz will be automatically submitted and only the answered questions will count toward your grade!";
+    	alert (myText);
+ 		 }
+	</script>
+
 </head>
 <body>
 	<!-- Top Navigation  -->
@@ -79,7 +88,7 @@
         <div class="sidebar">
 		<ul>
           <li class="active"><a href="./StudentClass.php"><i class="fas fa-question-circle"></i>Quizzes</a></li>
-		  <li><a href="./StudentGrade.php"><i class="fas fa-file-invoice"></i>Grades</a></li>  
+		  <li><a href="./StudentGrade.php"><i class="fas fa-bar-chart"></i>Grades</a></li>  
         </ul>
        </div>
 		<!--Main content here -->
@@ -120,7 +129,8 @@
 							<td><?php echo $quiz_ques; ?></td>
 							<td><?php echo $quiz_atmpt; ?></td>
 							<td>Active</td>
-							<td><a href="../php/GenerateQuiz.php?id=<?php echo $quiz_id;?>" class="button">Take Quiz</a></td>
+							<td><a href="TakeQuiz.php?id=<?php echo $quiz_id;?>" class="button" onclick="showAlert()">Take Quiz</a></td>
+							<!--<td><a href="../php/GenerateQuiz.php?id=<?php echo $quiz_id;?>" class="button">Take Quiz</a></td>-->
                         </tr>
 						<?php
 					}
