@@ -1,29 +1,32 @@
 <?php
 	session_start();
 	include('connect.php');
-	
+
 	// get session variables
 	$class_id = $_SESSION['class_id'];
 	$user_id = $_SESSION['username'];
 	$quiz_id = $_SESSION['quiz_id'];
 	$class_id = $_SESSION['class_id'];
+	$cur_question_id = $_SESSION['question_ids'];
 	
 	// compare student's answer to correct answer
 	$total_questions = 0;
 	$total_correct = 0;
-	foreach ($_SESSION['question_ids'] as $index=>$cur_question_id){
-		$student_ans = $_POST['ans'.$index];
-		$ans_query = "select true_ans from questions where question_id = '$cur_question_id'";
-		$ans_run = $conn->query($ans_query);
-		$ans_row = mysqli_fetch_array($ans_run);
-		$true_ans = $ans_row['true_ans'];
-		if ($true_ans == $student_ans){
-			$total_correct++;
+	if (isset($_POST['submit'])) {
+		foreach($_POST['quizcheck'] as $option_num => $student_ans){
+				$ans_query = "SELECT true_ans FROM questions";
+				$ans_run = $conn->query($ans_query);
+				$ans_row = mysqli_fetch_array($ans_run);
+				$true_ans = $ans_row['true_ans'];
+				if ($true_ans == $student_ans){
+					$total_correct++;
+				}
+				echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = $true_ans')</script>");
+				$total_questions++;
 		}
-		$total_questions++;
 	}
-	
 	$score = $total_correct / $total_questions;
+
 	// update score table
 	
 	// check to see if the student already has a row in scores
@@ -78,3 +81,4 @@
 	
 	echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentClass.php?id=$class_id';</script>");
 ?>
+

@@ -118,7 +118,7 @@
 						
 						$question_query = "SELECT distinct question, question_id, ans_a, ans_b, ans_c, ans_d, true_ans FROM  questions WHERE question_id = '$cur_question_id'"; 
 						$question_run = $conn->query($question_query);
-						$question_row = mysqli_fetch_array($question_run);
+						while($question_row = mysqli_fetch_array($question_run)){
 						$question = $question_row['question'];
 						$question_id = $question_row['question_id'];
 						$ans_a = $question_row['ans_a'];
@@ -132,28 +132,28 @@
 						<li>
 						<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_a; ?>]" />
-								<label>A)&nbsp;<?php echo $ans_a; ?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" value="A" />
+								A)&nbsp;<?php echo $ans_a; ?>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_b; ?>]" />
-								<label>B)&nbsp;<?php echo $ans_b;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" value="B" />
+								B)&nbsp;<?php echo $ans_b;?>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_c; ?>]" />
-								<label>C)&nbsp;<?php echo $ans_c;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" value="C" />
+								C)&nbsp;<?php echo $ans_c;?>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_d; ?>]" />
-								<label>D)&nbsp;<?php echo $ans_d;?></label>
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" value="D" />
+								D)&nbsp;<?php echo $ans_d;?>
 							</div>
 						</li>
 					</ol>
 				<?php
 						$count++;
+					 }
 					}
 				?>
-				<input type="hidden" name="question-id" id="question-id" value="$question_id" >
 				<br>
 					<input type="submit" name="submit" value="Submit Answers">
 			</form>				
@@ -166,3 +166,12 @@
 	</div>-->
 </body>
 </html>
+<?php
+if (isset($_POST['submit'])) {
+    $data = $_POST['checkquiz'];
+
+    foreach ($data as $key => $ans) {
+        echo 'Question :'. $key .' '. 'Answer :'. array_values($ans)[0].'<br/>';
+    }
+}
+?>

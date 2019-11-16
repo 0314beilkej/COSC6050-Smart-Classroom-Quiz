@@ -121,6 +121,8 @@
 						<th style="width: 300px;">Num. of Questions</th>
 						<th style="width: 300px;">Num. of Answers</th>
 						<th style="width: 300px;">Num. of Takes Left</th>
+						<th style="width: 300px;">Active</th>
+
 					</tr>
 			  </thead>
 			  <tbody>
@@ -137,6 +139,7 @@
 						$q_quest = $row['num_questions'];
 						$q_ans = $row['num_answer'];
 						$q_takes = $row['max_attempt'];
+						$q_active=$row['active'];
 					?>
 						<tr>
 						  <th scope="row"><?php echo $count; ?></th>
@@ -146,6 +149,7 @@
 						  <td><?php echo $q_quest; ?></td>
 						  <td><?php echo $q_ans; ?></td>
 						  <td><?php echo $q_takes; ?></td>
+						  <td><button type="button" name="Activate" onclick="">Activate</button></td>
 						</tr>
 					<?php
 					}

@@ -5,7 +5,7 @@ session_start();
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else {
+} elseif (isset($_POST['submit'])) {
 	
 	// Get form data 
 	$firstname	= filter_input(INPUT_POST, 'firstname');
@@ -81,8 +81,14 @@ if ($conn->connect_error) {
 		echo("<script>alert('Information updated successfully!') </script>");
 		echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
 	}
-}	
 	
-
-
+//deleting your account
+} elseif (isset($_POST['delete'])){	
+	$deleteSQL = "DELETE FROM users WHERE username = 'testguy' ";
+	if (mysqli_query($conn, $deleteSQL)) {
+	}
+	
+	echo("<script>alert('Your account has been deleted!') </script>");
+	echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/index.html';</script>");
+}
 ?>

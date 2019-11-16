@@ -82,22 +82,15 @@ include('php/connect.php');
 				<input id = "password" type="text" name="password"><br><br>
 				Confirm Password: <br>
 				<input id = "confpassword" type="text" name="confpassword"><br><br>
-				<input type="submit" value="Submit"> <br><br>
+				<input type="submit" value="Submit" name="submit"> <br><br>
+				<h4>Deleting your Account</h4>
+				<br>					
+				<p>This will erase all your information stored in our database. Are you sure you want to delete your account?</p>
+				<br>
+				<input type="submit" class="btn" value="Delete" name="delete">	
 			</fieldset>
 		</form>
-		<form action="php/UpdateInformation.php" method="POST">
-			<fieldset class="fieldset" >
-				<!-- deleting your account -->
-                <h4>Deleting your Account</h4>
-                <br>					
-                <p>Are you sure you want to delete your account?</p>
-                <br>
-				<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
-				<input type="submit" class="btn" value="Delete">
-				
-				
-			</fieldset>
-		</form>
+
 	</div>
 <main>
 	<div class="content-box">

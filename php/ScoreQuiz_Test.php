@@ -26,8 +26,6 @@
 		      		Questions Attempted
 				  </td>
 			<?php
-			$counter = 0;
-			$Resultans = 0;
                 if(isset($_POST['submit'])){
                 	if(!empty($_POST['quizcheck'])){
             		// Counting number of checked checkboxes.
