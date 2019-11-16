@@ -93,7 +93,7 @@
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz_Test.php" method="POST">
+			<form action="../php/ScoreQuiz.php" method="POST">
 				<?php 
 					/* $quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
@@ -132,19 +132,19 @@
 						<li>
 						<h3><?php echo $count; ?>) &nbsp<?php echo $question; ?></h3>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_a; ?>" />
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_a; ?>]" />
 								<label>A)&nbsp;<?php echo $ans_a; ?></label>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_b; ?>" />
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_b; ?>]" />
 								<label>B)&nbsp;<?php echo $ans_b;?></label>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_c; ?>" />
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_c; ?>]" />
 								<label>C)&nbsp;<?php echo $ans_c;?></label>
 							</div>
 							<div>
-								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="<?php echo $ans_d; ?>" />
+								<input type="radio" name="quizcheck[<?php echo $question_id; ?>]" id="quizcheck[<?php echo $ans_d; ?>]" />
 								<label>D)&nbsp;<?php echo $ans_d;?></label>
 							</div>
 						</li>
@@ -153,6 +153,7 @@
 						$count++;
 					}
 				?>
+				<input type="hidden" name="question-id" id="question-id" value="$question_id" >
 				<br>
 					<input type="submit" name="submit" value="Submit Answers">
 			</form>				

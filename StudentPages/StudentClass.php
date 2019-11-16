@@ -9,6 +9,7 @@
 	$class_id = substr($URI, 39);
 	$result = $conn->query("select * from class where class_id = '$class_id'");
 	$row = $result-> fetch_assoc();
+	$user_id = $_SESSION['username'];
 	
 	//set session variables
 	if ($class_id != ""){
@@ -101,16 +102,29 @@
                             <th style="width:322px;">Quiz Name</th>
 							<th style="width:122px;">Duration (min)</th>
 							<th style="width:122px;">Questions</th>
-							<th style="width:122px;">Attempts</th>
+							<th style="width:122px;">Attempts Remaining</th>
 							<th style="width:322px;">Status</th>
 							<th style="width:322px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
 					<?php 
+					
+					// Populate quizzes that the student hasn't taken yet
 					$classcode= $_SESSION['class_code'];
 					$class_id= $_SESSION['class_id'];
-					$query= "SELECT a.class_id, a.quiz_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					// $query= "SELECT a.class_id, a.quiz_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					$query = "select a.quiz_id, a.quiz_name, a.quiz_description, a.time_limit, a.num_questions, a.max_attempt
+							from quizzes a, enrollment b
+							where a.class_id = b.class_id
+							and b.student_id = '$user_id'
+							and b.class_id = '$class_id'
+							and not exists 
+								(select 'x'
+								 from scores c
+								 where c.student_id = b.student_id
+								 and c.quiz_id = a.quiz_id)";
+
 					$query_run = $conn->query($query);
 					$count = 0;
 					while($row1= mysqli_fetch_array($query_run)){
@@ -128,6 +142,43 @@
 							<td><?php echo $quiz_time; ?></td>
 							<td><?php echo $quiz_ques; ?></td>
 							<td><?php echo $quiz_atmpt; ?></td>
+							<td>Active</td>
+							<td><a href="TakeQuiz.php?id=<?php echo $quiz_id;?>" class="button" onclick="showAlert()">Take Quiz</a></td>
+							<!--<td><a href="../php/GenerateQuiz.php?id=<?php echo $quiz_id;?>" class="button">Take Quiz</a></td>-->
+                        </tr>
+						<?php
+					}
+					
+					// Populate quizzes that the student has taken, for which they still have attempts left over
+					$classcode= $_SESSION['class_code'];
+					$class_id= $_SESSION['class_id'];
+					//$query= "SELECT a.class_id, a.quiz_id, a.quiz_name, a.time_limit, a.num_questions, a.max_attempt  FROM quizzes a WHERE a.class_id = '$class_id'"; 
+					$query = "select a.quiz_id, a.quiz_name, a.quiz_description, a.time_limit, a.num_questions, a.max_attempt, c.attempt_count
+								from quizzes a, enrollment b, scores c
+								where a.class_id = b.class_id
+								and b.student_id = '$user_id'
+								and b.class_id = '$class_id'
+								and a.quiz_id = c.quiz_id
+								and b.student_id = c.student_id
+								and c.attempt_count < a.max_attempt";
+
+					$query_run = $conn->query($query);
+					$count = 0;
+					while($row1= mysqli_fetch_array($query_run)){
+						$count++;
+						$quiz_name = $row1['quiz_name'];
+						$quiz_time = $row1['time_limit'];
+						$quiz_ques = $row1['num_questions'];
+						$quiz_id = $row1['quiz_id'];
+						$remaining_attempts = $row1['max_attempt'] - $row1['attempt_count'];
+					
+					?>
+                        <tr>
+                            <td scope="row"><?php echo $count; ?></td>
+                            <td><?php echo $quiz_name; ?></td>
+							<td><?php echo $quiz_time; ?></td>
+							<td><?php echo $quiz_ques; ?></td>
+							<td><?php echo $remaining_attempts; ?></td>
 							<td>Active</td>
 							<td><a href="TakeQuiz.php?id=<?php echo $quiz_id;?>" class="button" onclick="showAlert()">Take Quiz</a></td>
 							<!--<td><a href="../php/GenerateQuiz.php?id=<?php echo $quiz_id;?>" class="button">Take Quiz</a></td>-->

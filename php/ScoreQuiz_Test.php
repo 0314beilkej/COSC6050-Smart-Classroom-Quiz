@@ -10,7 +10,8 @@
 	$quiz_id = $_GET['id'];
     $_SESSION['quiz_id'] = $quiz_id;
     
-    $class_id = $_SESSION['class_id'];
+	$class_id = $_SESSION['class_id'];
+	 
 ?>
 <html>
 <head></head>
@@ -32,7 +33,7 @@
             		// Counting number of checked checkboxes.
 						$checked_count = count($_POST['quizcheck']);
 					}
-				}	
+				}
             ?>
         	<td>
             <?php
@@ -41,28 +42,26 @@
 			
 			<?php
 			// Loop to store and display values of individual checked checkbox.
+			$score = 0;
+			$counter =0;
 			$selected = $_POST['quizcheck'];
 			print_r($selected);
-			//$result = 0;
-		foreach ($_SESSION['question_ids'] as $index=>$cur_question_id){
-				$q1= "SELECT true_ans FROM questions WHERE question_id = '$cur_question_id'";
-				$ans_run = $conn->query($q1);
-           		 $i = 1;
-            	while($rows = mysqli_fetch_array($ans_run)) {
-					$flag = $rows['ans'] == $selected[$i];
-            	
-					if($flag){
-						// echo "correct ans is ".$rows['ans']."<br>";				
-						$counter++;
-						$Resultans++;
-						// echo "Well Done! your ". $counter ." answer is correct <br><br>";
-					}else{
-						$counter++;
-						// echo "Sorry! your ". $counter ." answer is innncorrect <br><br>";
-					}					
-				$i++;		
-			}
-		}
+			$questionID= $_POST['question-id'];
+			$sql = "SELECT true_ans from questions WHERE question_id = $questionID";
+				$result = $conn->query($sql);
+            	if ($result->num_rows > 0) {
+               	 while($row = $result->fetch_assoc()) {
+                    $correct = $row["true_ans"];
+                                        }
+                                    }
+
+            if ($selected == $correct) {
+				$score++;
+				$$counter++;
+            }
+            else {
+				$counter++;
+            }
 			?>
 			<tr>
     			<td>
@@ -70,7 +69,7 @@
 				</td>
 				<td colspan="2">
 	    		<?php 
-				echo " Your score is ". $Resultans.".";?>
+				echo " Your score is ". $score.".";?>
 				</td>
 			</tr>
         </tr>
