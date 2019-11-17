@@ -123,7 +123,8 @@
 								(select 'x'
 								 from scores c
 								 where c.student_id = b.student_id
-								 and c.quiz_id = a.quiz_id)";
+								 and c.quiz_id = a.quiz_id)
+							and a.active = 1";
 
 					$query_run = $conn->query($query);
 					$count = 0;
@@ -160,7 +161,8 @@
 								and b.class_id = '$class_id'
 								and a.quiz_id = c.quiz_id
 								and b.student_id = c.student_id
-								and c.attempt_count < a.max_attempt";
+								and c.attempt_count < a.max_attempt
+								and a.active = 1";
 
 					$query_run = $conn->query($query);
 					$count = 0;

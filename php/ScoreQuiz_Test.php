@@ -2,74 +2,178 @@
 	session_start();
 	include('../php/connect.php');
 	include('../php/session.php');
-	include('../php/GenerateQuiz.php');
 	
-	// Get quiz id from URI
-	$URI = $_SERVER['REQUEST_URI'];
-	$quiz_id = substr($URI, 36);
-	$quiz_id = $_GET['id'];
-    $_SESSION['quiz_id'] = $quiz_id;
-    
+	// set decimal precision for division
+	ini_set("precision", 3);
+	
+	// get session variables
 	$class_id = $_SESSION['class_id'];
-	 
+	$user_id = $_SESSION['username'];
+	$quiz_id = $_SESSION['quiz_id'];
+	$class_id = $_SESSION['class_id'];
+	$cur_question_id = $_SESSION['question_ids'];
+
 ?>
+
 <html>
-<head></head>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!--Font Awesome-->
+	<script src="https://kit.fontawesome.com/f2904e4571.js" crossorigin="anonymous"></script>
+	
+	<!--Google Fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Candal|Lora&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,400,500,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+    
+	<!-- Material Kit CSS -->
+	<link rel="stylesheet" href="../css/HeaderSheet.css">
+	<link rel="stylesheet" href="../css/TakeQuiz_style.css">
+
+    <!--bootstrap-->
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Score Quiz</title>
+</head>
+<body>
+	<!-- Top Navigation  -->
+	<header>
+	<div class="logo">
+		<h1 class="log-text">MarQuiz</h1>
+		<h4>
+		<a class= "class_name" href="#0">
+		<i class="fas fa-grip-vertical" style="color:#E6E6FA"></i>&nbsp <?php echo $_SESSION['classname']?></a>
+		</h4>
+	</div>
+	
+
+	<i class="fa fa-bars menu-toggle"></i>
+	<ul class="nav"> 
+		<li><a href="#">
+			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
+			<ul style="	z-index: 100; ">
+		       <li><a href="../MyProfile.php">My profile</a></li>
+		       <li><a href="../php/logout.php">Logout</a></li>
+			</ul>
+		</li>
+	</ul>
+    </header> 
+
 <body>
 <table class="table text-center table-bordered table-hover">
       	<tr>
-      		<th colspan="2" class="bg-dark"> <h1 class="text-white"> Results </h1></th>
-      		
+      		<th colspan="2" class="bg-dark"> <h1 class="text-white"> Results </h1></th>	
       	</tr>
       	<tr>
-		      	<td>
-		      		Questions Attempted
-				  </td>
-			<?php
-                if(isset($_POST['submit'])){
-                	if(!empty($_POST['quizcheck'])){
-            		// Counting number of checked checkboxes.
-						$checked_count = count($_POST['quizcheck']);
-					}
+		  <?php
+		// compare student's answer to correct answer
+			$total_questions = 0;
+		$total_correct = 0;
+		if (isset($_POST['submit'])) {
+		foreach($_POST['quizcheck'] as $option_num => $student_ans){
+				$ans_query = "SELECT true_ans FROM questions";
+				$ans_run = $conn->query($ans_query);
+				$ans_row = mysqli_fetch_array($ans_run);
+				$true_ans = $ans_row['true_ans'];
+				if ($true_ans == $student_ans){
+					$total_correct++;
 				}
-            ?>
+				//echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = $true_ans')</script>");
+				$total_questions++;
+		}
+	}
+	$score = $total_correct / $total_questions;
+	$score = $score * 100;
+	// update score table
+	
+	// check to see if the student already has a row in scores
+	$score_exists_query = "select 'x' from scores where student_id = '$user_id' and quiz_id = '$quiz_id'";
+	$score_exists = $conn->query($score_exists_query)->num_rows;
+	
+	// If there is an existing row, we need to update that row with the current score and attempt count. Otherwise we insert a row 
+	if ($score_exists > 0) {
+		
+		// Get attempt count and best score
+		$score_query = "select attempt_count, best_score, best_attempt from scores where student_id = '$user_id' and quiz_id = '$quiz_id'";
+		$score_run = $conn->query($score_query);
+		$score_result = mysqli_fetch_assoc($score_run);
+		$attempt_count = $score_result['attempt_count'];
+		$best_score = $score_result['best_score'];
+		$best_attempt = $score_result['best_attempt'];
+		
+		// Update attempt count
+		$attempt_count++;
+		
+		// If the current score is better than the previous best score, update best score and best attempt
+		if ($score >= $best_score) {
+			$best_score = $score;
+			$best_attempt = $attempt_count;
+		}
+		
+		// Insert updated information
+		$update = "update scores set attempt_count = '$attempt_count', best_score = '$best_score', best_attempt = '$best_attempt' where student_id = '$user_id' and quiz_id = '$quiz_id'";
+		$update_run = $conn->query($update);
+		if ($conn->query($update) === true){
+			//echo("<script>alert('Your scores have been updated. Score: $total_correct out of $total_questions')</script>");
+		} else {
+			 echo "Error: " . $update . "<br>" . $conn->error;
+		}
+		
+		
+	} else {
+		// if no row exists, we need to insert a row into the table
+		$insert = "INSERT INTO `scores` (`student_id`, `class_id`, `quiz_id`, `attempt_count`, `best_score`, `best_attempt`, `first_attempt_score`) 
+		VALUES ('$user_id', '$class_id', '$quiz_id', '1', '$score', '1', '$score')";
+		if ($conn->query($insert) === true){
+			//echo("<script>alert('Your scores have been updated. Score: $total_correct out of $total_questions')</script>");
+		} else {
+			 echo "Error: " . $insert . "<br>" . $conn->error;
+		}
+			
+	}
+	
+		  ?>
+		      	<td>
+				  Questions Attemps
+				</td>
         	<td>
             <?php
-			echo "Out of ??, You have attempt ".$checked_count. " options.";?>
-			</td>
-			
-			<?php
-			// Loop to store and display values of individual checked checkbox.
-			$score = 0;
-			$counter =0;
-			$selected = $_POST['quizcheck'];
-			print_r($selected);
-			$questionID= $_POST['question-id'];
-			$sql = "SELECT true_ans from questions WHERE question_id = $questionID";
-				$result = $conn->query($sql);
-            	if ($result->num_rows > 0) {
-               	 while($row = $result->fetch_assoc()) {
-                    $correct = $row["true_ans"];
-                                        }
-                                    }
-
-            if ($selected == $correct) {
-				$score++;
-				$$counter++;
-            }
-            else {
-				$counter++;
-            }
+			echo " $total_questions";
 			?>
-			<tr>
-    			<td>
-    				Your Total score
-				</td>
-				<td colspan="2">
-	    		<?php 
-				echo " Your score is ". $score.".";?>
-				</td>
-			</tr>
+			</td>
+		</tr>
+		<tr>
+					
+			<td>
+				  Correct Answers
+			</td>
+        	<td>
+            <?php
+			echo " $total_correct";
+			?>
+			</td>
+        </tr>
+		<tr>
+					
+			<td>
+				  Score
+			</td>
+        	<td>
+            <?php
+			echo " $score";
+			?>
+			</td>
+        </tr>
+		<tr>			
+			<td>
+				  Quiz Best Sore 
+			</td>
+        	<td>
+            <?php
+			echo " $best_score";
+			?>
+			</td>
         </tr>
       </table>
 </body>

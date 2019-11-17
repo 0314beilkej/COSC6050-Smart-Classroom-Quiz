@@ -93,7 +93,7 @@
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz.php" method="POST">
+			<form action="../php/ScoreQuiz_Test.php" method="POST">
 				<?php 
 					/* $quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
@@ -166,12 +166,3 @@
 	</div>-->
 </body>
 </html>
-<?php
-if (isset($_POST['submit'])) {
-    $data = $_POST['checkquiz'];
-
-    foreach ($data as $key => $ans) {
-        echo 'Question :'. $key .' '. 'Answer :'. array_values($ans)[0].'<br/>';
-    }
-}
-?>

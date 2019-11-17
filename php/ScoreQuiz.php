@@ -1,7 +1,10 @@
 <?php
 	session_start();
 	include('connect.php');
-
+	
+	// set decimal precision for division
+	ini_set("precision", 3);
+	
 	// get session variables
 	$class_id = $_SESSION['class_id'];
 	$user_id = $_SESSION['username'];
@@ -21,11 +24,12 @@
 				if ($true_ans == $student_ans){
 					$total_correct++;
 				}
-				echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = $true_ans')</script>");
+				//echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = $true_ans')</script>");
 				$total_questions++;
 		}
 	}
 	$score = $total_correct / $total_questions;
+	$score = $score * 100;
 
 	// update score table
 	

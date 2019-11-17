@@ -4,10 +4,10 @@
 	include('../php/connect.php');
 	
 	// Get quiz id from URI
-	$URI = $_SERVER['REQUEST_URI'];
-	//$quiz_id = substr($URI, 36);
 	$quiz_id = $_GET['id'];
 	$_SESSION['quiz_id'] = $quiz_id;
+	$class_id = $_SESSION['class_id'];
+	$user_id = $_SESSION['username'];
 
 ?>
 <html>
@@ -118,7 +118,7 @@
                                 <div class="form-group col-md-4">
                                         <label>Select Quiz name: </label>&nbsp
 										<select name="quiz_id" class="form-control" maxlength="20" onchange="location = this.value"required>
-											<option value= "TeacherGrades.php">All Quizzes</option>
+											<option value= "TeacherGrades.php">Select a Quiz...</option>
 											<?php 
 												// list all quizzes for the teacher and class
 												$instructor_id = $_SESSION['username'];
@@ -149,30 +149,59 @@
                         </thead>
                         <tbody>
 							<?php 
-								if ($quiz_id == $quiz_id) {
+								// If "all quizzes" is selected
+								if ($quiz_id == "") {
 									$grades_query = "SELECT * from scores where quiz_id = '$quiz_id'";
 									
-								} elseif ($quiz_id == "") {
+								} else {
 									$grades_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
-									//$question_query = "select a.question, a.correct_answer from questions_2 a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
-							
 									
-								}
-								$query_run = $conn->query($grades_query);
-								while($row = mysqli_fetch_array($query_run)){
+									// first get all of the students who have not yet attempted the quiz
+									$grades_query = "select a.student_id
+									from enrollment a
+									where a.class_id = '$class_id'
+									and not exists (select 'x' 
+													from scores b1 
+													where b1.student_id = a.student_id 
+													and b1.quiz_id = '$quiz_id')";
+													
+									$query_run = $conn->query($grades_query);
+									while($row = mysqli_fetch_array($query_run)){
+										$row_student = $row['student_id'];
+										//$row_attempts = $row['attempt_count'];
+										//$row_best_score = $row['best_score'];
+										//$row_first_attempt_score = $row['first_attempt_score'];
+								?>
+									<tr>
+										<td><?php echo $row_student; ?></td>
+										<td><?php echo 0; ?></td>
+										<td><?php echo "n/a"; ?></td>
+										<td><?php echo "n/a"; ?></td>
+									</tr>
+								<?php
+									}
+
+									$grades_query = "select a.student_id, a.attempt_count, a.best_score, a.first_attempt_score
+									from scores a 
+									where a.quiz_id = '$quiz_id'";
+									
+									$query_run = $conn->query($grades_query);
+									while($row = mysqli_fetch_array($query_run)){
 										$row_student = $row['student_id'];
 										$row_attempts = $row['attempt_count'];
 										$row_best_score = $row['best_score'];
 										$row_first_attempt_score = $row['first_attempt_score'];
-							?>
-								<tr>
-									<td><?php echo $row_student; ?></td>
-									<td><?php echo $row_attempts; ?></td>
-									<td><?php echo $row_best_score; ?></td>
-									<td><?php echo $row_first_attempt_score; ?></td>
-								</tr>
-							<?php
+								?>
+									<tr>
+										<td><?php echo $row_student; ?></td>
+										<td><?php echo $row_attempts; ?></td>
+										<td><?php echo $row_best_score; ?></td>
+										<td><?php echo $row_first_attempt_score; ?></td>
+									</tr>
+								<?php
+									}
 								}
+								
 							?>
                         </tbody>
                     </table>

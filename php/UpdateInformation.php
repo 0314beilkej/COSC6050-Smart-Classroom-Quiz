@@ -83,8 +83,9 @@ if ($conn->connect_error) {
 	}
 	
 //deleting your account
-} elseif (isset($_POST['delete'])){	
-	$deleteSQL = "DELETE FROM users WHERE username = 'testguy' ";
+} elseif (isset($_POST['delete'])){
+	$username = $_SESSION['username'];	
+	$deleteSQL = "DELETE FROM users WHERE username = '$username' ";
 	if (mysqli_query($conn, $deleteSQL)) {
 	}
 	

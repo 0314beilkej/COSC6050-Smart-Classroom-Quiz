@@ -77,7 +77,7 @@ include('php/connect.php');
 				Last name:<br>
 				<input id = "lastname" type="text" name="lastname"><br>
 				Email Address:<br>
-				<input id = "email" type="email" name="email"><br><br>
+				<input id = "email" type="email" name="email"><br><br>			
 				Password - <br> Every password must be at least 6 characters and contain at least 1 number, upper and lowercase letter: <br>
 				<input id = "password" type="text" name="password"><br><br>
 				Confirm Password: <br>

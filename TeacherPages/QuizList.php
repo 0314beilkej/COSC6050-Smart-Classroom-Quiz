@@ -133,6 +133,7 @@
 					$count = 0;
 					while($row= mysqli_fetch_array($query_run)){
 						$count++;
+						$q_id = $row['quiz_id'];
 						$q_name = $row['quiz_name'];
 						$q_desp = $row['quiz_description'];
 						$q_time = $row['time_limit'];
@@ -149,7 +150,12 @@
 						  <td><?php echo $q_quest; ?></td>
 						  <td><?php echo $q_ans; ?></td>
 						  <td><?php echo $q_takes; ?></td>
-						  <td><button type="button" name="Activate" onclick="">Activate</button></td>
+						  <?php if ($q_active == 0) { ?>
+							<td><button type="button" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Activate Quiz </button></td>
+						  <?php 
+						  } else { ?>
+							<td><button type="button" name="Close" onclick="window.location.href = '../php/CloseQuiz.php?id=<?php echo $q_id ?>'"> Close Quiz </button></td>
+						  <?php } ?>
 						</tr>
 					<?php
 					}

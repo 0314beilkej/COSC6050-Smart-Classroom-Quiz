@@ -154,7 +154,8 @@
 									$question_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
 									//$question_query = "select a.question, a.correct_answer from questions_2 a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
 								} else {
-									$question_query = "SELECT question_id, question, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer from questions where quiz_id = '$quiz_id'";
+									$question_query = "SELECT question_id, question, ans_a, ans_b, ans_c, ans_d, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer, true_ans 
+									from questions where quiz_id = '$quiz_id'";
 									//$question_query = "select question, correct_answer from questions_2 where quiz_id = '$quiz_id'";
 								}
 								$count = 0;
@@ -164,13 +165,18 @@
 										$row_question = $row['question'];
 										$row_answer = $row['answer'];
 										$row_question_id = $row['question_id'];
+										$row_ans_a = $row['ans_a'];
+										$row_ans_b = $row['ans_b'];
+										$row_ans_c = $row['ans_c'];
+										$row_ans_d = $row['ans_d'];
+										$true_ans = $row['true_ans'];
 							?>
 								<tr>
 									<td><?php echo $count; ?></td>
 									<td><?php echo $row_question; ?></td>
 									<td><?php echo $row_answer; ?></td>
 									<td>
-										<a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+										<a href="#editQuestionModal<?php echo $row_question_id?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>" data-id-2="15"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 									</td>
 								</tr>
@@ -205,27 +211,52 @@
 			
 			
             <!-- Edit Modal HTML -->
-            <div id="editQuestionModal" class="modal">
-                    <form action="" class="form-container" method="POST">
+			<?php 
+				if ($quiz_id == "") {
+					$question_query = "SELECT question_id, question, ans_a, ans_b, ans_c, ans_d, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer, true_ans
+					from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+					//$question_query = "select a.question, a.correct_answer from questions_2 a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+				} else {
+					$question_query = "SELECT question_id, question, ans_a, ans_b, ans_c, ans_d, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer, true_ans 
+					from questions where quiz_id = '$quiz_id'";
+					//$question_query = "select question, correct_answer from questions_2 where quiz_id = '$quiz_id'";
+				}
+				$count = 0;
+				$query_run = $conn->query($question_query);
+				while($row = mysqli_fetch_array($query_run)){
+						$count = $count+1;
+						$row_question = $row['question'];
+						$row_answer = $row['answer'];
+						$row_question_id = $row['question_id'];
+						$row_ans_a = $row['ans_a'];
+						$row_ans_b = $row['ans_b'];
+						$row_ans_c = $row['ans_c'];
+						$row_ans_d = $row['ans_d'];
+						$true_ans = $row['true_ans'];
+			?>
+            <div id="editQuestionModal<?php echo $row_question_id;?>" class="modal">
+                    <form action="../php/EditQuestion.php" class="form-container" method="POST">
                             <h2>Edit the question</h2>  
                             <br>
-                                <textarea rows="2" placeholder="Enter the question here" name="q_name" ></textarea>
-                                <textarea rows="2" placeholder="Enter Answer (A)" name="ans1" ></textarea>
-                                <textarea rows="2" placeholder="Enter Answer (B)" name="ans2" ></textarea>
-                                <textarea  rows="2" placeholder="Enter Answer (C)" name="ans3" ></textarea>
-                                <textarea  rows="2" placeholder="Enter Answer (D)" name="ans4" ></textarea>
-                                <select name="true_ans" required>
+                                <textarea rows="2" placeholder="<?php echo $row_question ?>" name="q_name" ></textarea>
+                                <textarea rows="2" placeholder="<?php echo $row_ans_a; ?>" name="opt_1" ></textarea>
+								<textarea rows="2" placeholder="<?php echo $row_ans_b; ?>" name="opt_2" ></textarea>
+								<textarea  rows="2" placeholder="<?php echo $row_ans_c; ?>" name="opt_3" ></textarea>
+								<textarea  rows="2" placeholder="<?php echo $row_ans_d; ?>" name="opt_4" ></textarea>
+								<input type="hidden" name="question_id" value="<?php echo $row_question_id; ?>" ></input>
+                                <select placeholder="" name="true_ans" required>
                                             <option name="">--Correct Answer--</option>
-                                            <option name= "ans1">A</option>
-                                            <option name= "ans2">B</option>
-                                            <option name= "ans3">C</option>
-                                            <option name= "ans4">D</option>
+                                            <option name= "ans1" <?php if ($true_ans == "A") { echo "selected";}?>>A</option>
+                                            <option name= "ans2" <?php if ($true_ans == "B") { echo "selected";}?>>B</option>
+                                            <option name= "ans3" <?php if ($true_ans == "C") { echo "selected";}?>>C</option>
+                                            <option name= "ans4" <?php if ($true_ans == "D") { echo "selected";}?>>D</option>
                                 </select>
                                 <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
                                 <input type="submit" class="btn" value="Edit">
                         </form>
                 
             </div>
+				<?php } ?>
             <!-- Delete Modal HTML -->
             <div id="deleteQuestionModal" class="modal">
                 <form action = "../php/DeleteQuestion.php" method="GET" class="form-container">

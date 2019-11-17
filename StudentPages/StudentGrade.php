@@ -4,13 +4,10 @@
 	include('../php/connect.php');
 	
 	// Get quiz id from URI
-	$URI = $_SERVER['REQUEST_URI'];
-	//$quiz_id = substr($URI, 36);
 	$quiz_id = $_GET['id'];
 	$_SESSION['quiz_id'] = $quiz_id;
-
-	
-	
+	$user_id = $_SESSION['username'];
+	$class_id = $_SESSION['class_id'];
 
 ?>
 <html>
@@ -30,7 +27,7 @@
     <link rel="stylesheet" href="../css/Side_Main_sheet.css">
     <link rel="stylesheet" href="../css/Questions_style.css">
 
-    <!--bootstrap-->
+    <!--bootstrap--> 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    
 	<!-- Insert javascript Modal link-->
@@ -92,9 +89,43 @@
                         </thead>
                         <tbody>
 							<?php
-								$grades_query = "SELECT * from scores where student_id = '$username' and class_id = " . $_SESSION['class_id'];
+								// Get quizzes that haven't been attempted
+								//$grades_query = "SELECT * from scores where student_id = '$username' and class_id = " . $_SESSION['class_id'];
+								$grades_query = "select a.quiz_name
+									from quizzes a, enrollment b
+									where a.class_id = b.class_id
+									and b.student_id = '$user_id'
+									and b.class_id = '$class_id'
+									and not exists 
+										(select 'x'
+										 from scores c
+										 where c.student_id = b.student_id
+										 and c.quiz_id = a.quiz_id)";
 								$query_run = $conn->query($grades_query);
+								while($row = mysqli_fetch_array($query_run)){
+									$row_quiz = $row['quiz_name'];
+									//$row_attempts = $row['attempt_count'];
+									//$row_best_score = $row['best_score'];
+							
+							?>
+								<tr>
+									<td><?php echo $row_quiz; ?></td>
+									<td> 0 </td>
+									<td>n/a</td>
+								</tr>
+							<?php
+								}
 								
+								// get grades for attempted quizzes
+								//$grades_query = "SELECT * from scores where student_id = '$user_id' and class_id = " . $_SESSION['class_id'];
+								$grades_query = "select a.quiz_id, a.quiz_name, c.attempt_count, c.best_score
+								from quizzes a, enrollment b, scores c
+								where a.class_id = b.class_id
+								and b.student_id = '$user_id'
+								and b.class_id = '$class_id'
+								and a.quiz_id = c.quiz_id
+								and b.student_id = c.student_id";
+								$query_run = $conn->query($grades_query);
 								while($row = mysqli_fetch_array($query_run)){
 									$row_quiz = $row['quiz_name'];
 									$row_attempts = $row['attempt_count'];
@@ -104,7 +135,7 @@
 								<tr>
 									<td><?php echo $row_quiz; ?></td>
 									<td><?php echo $row_attempts; ?></td>
-									<td><?php echo $row_best_score; ?></td>
+									<td><?php echo $row_best_score."%"; ?></td>
 								</tr>
 							<?php
 								}
