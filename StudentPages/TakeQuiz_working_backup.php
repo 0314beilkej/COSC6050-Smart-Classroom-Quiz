@@ -1,3 +1,4 @@
+// Backup of ScoreQuiz.php with working scoring.  This does not include the scores page
 <?php
 	session_start();
 	include('../php/connect.php');
@@ -85,7 +86,7 @@
 					}
  					function xx(){
    					clearInterval(x);
-  					window.location.href='../php/ScoreQuiz.php';
+  					 window.location.href='../php/ScoreQuiz.php';
  				 }
   				</script>		
 			<!--End of Countdown Timer Code-->
@@ -93,7 +94,7 @@
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz.php" method="POST" id="quiz">
+			<form action="../php/ScoreQuiz.php" method="POST">
 				<?php 
 					/* $quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
