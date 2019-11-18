@@ -3,7 +3,7 @@
 	include('connect.php');
 	
 	$quiz_id = $_GET['id'];
-	$update = "update quizzes set active = 0 where quiz_id = '$quiz_id'";
+	$update = "update quizzes set active = 2 where quiz_id = '$quiz_id'";
 	
 	if($conn->query($update) === true){
 		echo("<script>alert('Your quiz has been closed! Students will no longer be able to take this quiz.')</script>");

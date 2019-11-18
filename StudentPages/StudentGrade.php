@@ -85,13 +85,14 @@
                                 <th>Quiz</th>
                                 <th style="width:400px;">Attempts Taken</th>
                                 <th style="width:400px;">Best Score</th>
+								<th style="width:400px;">Status</th>
                             </tr>
                         </thead>
                         <tbody>
 							<?php
 								// Get quizzes that haven't been attempted
 								//$grades_query = "SELECT * from scores where student_id = '$username' and class_id = " . $_SESSION['class_id'];
-								$grades_query = "select a.quiz_name
+								$grades_query = "select a.quiz_name, a.active
 									from quizzes a, enrollment b
 									where a.class_id = b.class_id
 									and b.student_id = '$user_id'
@@ -100,10 +101,12 @@
 										(select 'x'
 										 from scores c
 										 where c.student_id = b.student_id
-										 and c.quiz_id = a.quiz_id)";
+										 and c.quiz_id = a.quiz_id)
+									and a.active in (1,2)";
 								$query_run = $conn->query($grades_query);
 								while($row = mysqli_fetch_array($query_run)){
 									$row_quiz = $row['quiz_name'];
+									$active = $row['active'];
 									//$row_attempts = $row['attempt_count'];
 									//$row_best_score = $row['best_score'];
 							
@@ -112,30 +115,45 @@
 									<td><?php echo $row_quiz; ?></td>
 									<td> 0 </td>
 									<td>n/a</td>
+									<td><?php if ($active == 1) { echo "Active";} else {echo "Closed";} ?></td>
+									
 								</tr>
 							<?php
 								}
 								
 								// get grades for attempted quizzes
 								//$grades_query = "SELECT * from scores where student_id = '$user_id' and class_id = " . $_SESSION['class_id'];
-								$grades_query = "select a.quiz_id, a.quiz_name, c.attempt_count, c.best_score
+								$grades_query = "select a.quiz_id, a.quiz_name, c.attempt_count, c.best_score, a.max_attempt, a.active
 								from quizzes a, enrollment b, scores c
 								where a.class_id = b.class_id
 								and b.student_id = '$user_id'
 								and b.class_id = '$class_id'
 								and a.quiz_id = c.quiz_id
-								and b.student_id = c.student_id";
+								and b.student_id = c.student_id
+								and a.active in (1,2)";
 								$query_run = $conn->query($grades_query);
 								while($row = mysqli_fetch_array($query_run)){
 									$row_quiz = $row['quiz_name'];
 									$row_attempts = $row['attempt_count'];
 									$row_best_score = $row['best_score'];
+									$active = $row['active'];
+									$max_attempts = $row['max_attempt'];
 							
 							?>
 								<tr>
 									<td><?php echo $row_quiz; ?></td>
 									<td><?php echo $row_attempts; ?></td>
 									<td><?php echo $row_best_score."%"; ?></td>
+									<td><?php 
+										if ($active == 2) { 
+											echo "Closed";
+										} else {
+											if ($row_attempts >= $max_attempts) {
+												echo "No attempts remaining";
+											} else {
+												echo "Active";
+											}
+										} ?> </td>
 								</tr>
 							<?php
 								}

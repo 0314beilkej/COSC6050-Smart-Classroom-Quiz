@@ -153,7 +153,9 @@
 						  <?php if ($q_active == 0) { ?>
 							<td><button type="button" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Activate Quiz </button></td>
 						  <?php 
-						  } else { ?>
+						  } else if ($q_active == 2) { ?>
+							  <td><button type="button" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Reactivate Quiz </button></td>
+						  <?php } else { ?>
 							<td><button type="button" name="Close" onclick="window.location.href = '../php/CloseQuiz.php?id=<?php echo $q_id ?>'"> Close Quiz </button></td>
 						  <?php } ?>
 						</tr>

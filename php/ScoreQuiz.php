@@ -11,7 +11,7 @@
 	$user_id = $_SESSION['username'];
 	$quiz_id = $_SESSION['quiz_id'];
 	$class_id = $_SESSION['class_id'];
-	//$cur_question_id = $_SESSION['question_ids'];
+	$classname = $_SESSION['classname'];
 
 ?>
 
@@ -212,6 +212,8 @@
 			</td>
         </tr>
 	</table>
+	<br> <br>
+	<input style="margin-left: 40%;" type="submit" name="back" value="Go Back to <?php echo $classname; ?>" onclick="window.location.href = '../StudentPages/StudentClass.php?id=<?php echo $class_id ?>'">
 </div>
 </body>
 </html>
