@@ -70,16 +70,22 @@ include('php/connect.php');
 	   <!-- main content -->
 		<form action="php/UpdateInformation.php" method="POST">
 			<fieldset class="fieldset" >
+
 				<legend class="legend">Personal information:</legend>
+				<img src="images/personal_information.jpg" alt="information" class="marginauto" style="width:775px; height:190px;"> 
+
 				<p> If you would like to update your information, please enter any changes and submit. <p><br>
 				<a> First name: </a><br>
 				<input id = "firstname" type="text" name="firstname"><br>
+
 				Last name:<br>
 				<input id = "lastname" type="text" name="lastname"><br>
+
 				Email Address:<br>
-				<input id = "email" type="email" name="email"><br><br>			
+				<input id = "email" type="email" name="email"><br>	
+	
 				Password - <br> Every password must be at least 6 characters and contain at least 1 number, upper and lowercase letter: <br>
-				<input id = "password" type="text" name="password"><br><br>
+				<input id = "password" type="text" name="password"><br>
 				Confirm Password: <br>
 				<input id = "confpassword" type="text" name="confpassword"><br><br>
 				<input type="submit" value="Submit" name="submit"> <br><br>

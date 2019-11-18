@@ -35,6 +35,29 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Score Quiz</title>
+	<style>
+		#results {
+   		border-collapse: collapse;
+  		width: 100%;
+	}
+
+#results td, #results caption {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#results tr:nth-child(even){background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results caption {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #ffa31a;
+  color: white;
+}
+</style>
 </head>
 <body>
 	<!-- Top Navigation  -->
@@ -50,6 +73,9 @@
 
 	<i class="fa fa-bars menu-toggle"></i>
 	<ul class="nav"> 
+		<li>
+			<a href="./StudentClass.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
+		</li>
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
 			<ul style="	z-index: 100; ">
@@ -61,37 +87,33 @@
     </header> 
 
 <body>
-<table class="table text-center table-bordered table-hover">
-      	<tr>
-      		<th colspan="2" class="bg-dark"> <h1 class="text-white"> Results </h1></th>	
-      	</tr>
-      	<tr>
-		  <?php
+<div id="container">
+	<?php
 		// compare student's answer to correct answer
-			$total_questions = 0;
+		$total_questions = 0;
 		$total_correct = 0;
 		if (isset($_POST['submit'])) {
 		foreach($_POST['quizcheck'] as $option_num => $student_ans){
-				$ans_query = "SELECT true_ans FROM questions";
-				$ans_run = $conn->query($ans_query);
-				$ans_row = mysqli_fetch_array($ans_run);
+			$ans_query = "SELECT quiz_id, true_ans FROM questions Where quiz_id = $quiz_id";
+			$ans_run = $conn->query($ans_query);
+			$ans_row = mysqli_fetch_array($ans_run);
 				$true_ans = $ans_row['true_ans'];
 				if ($true_ans == $student_ans){
 					$total_correct++;
 				}
 				//echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = $true_ans')</script>");
 				$total_questions++;
+			}
 		}
-	}
-	$score = $total_correct / $total_questions;
-	$score = $score * 100;
-	// update score table
+		$score = $total_correct / $total_questions;
+		$score = $score * 100;
+		// update score table
 	
-	// check to see if the student already has a row in scores
-	$score_exists_query = "select 'x' from scores where student_id = '$user_id' and quiz_id = '$quiz_id'";
-	$score_exists = $conn->query($score_exists_query)->num_rows;
+		// check to see if the student already has a row in scores
+		$score_exists_query = "select 'x' from scores where student_id = '$user_id' and quiz_id = '$quiz_id'";
+		$score_exists = $conn->query($score_exists_query)->num_rows;
 	
-	// If there is an existing row, we need to update that row with the current score and attempt count. Otherwise we insert a row 
+		// If there is an existing row, we need to update that row with the current score and attempt count. Otherwise we insert a row 
 	if ($score_exists > 0) {
 		
 		// Get attempt count and best score
@@ -133,32 +155,29 @@
 			
 	}
 	
-		  ?>
-		      	<td>
-				  Questions Attemps
-				</td>
+	?>
+	<table id="results">
+    	<tr>
+		<caption><h1>Results</h1> </caption>
+		</tr>
+		<tr>		      	
+			<td>Questions Attempts</td>
         	<td>
             <?php
 			echo " $total_questions";
 			?>
 			</td>
 		</tr>
-		<tr>
-					
-			<td>
-				  Correct Answers
-			</td>
+		<tr>		
+			<td>Correct Answers</td>
         	<td>
             <?php
 			echo " $total_correct";
 			?>
 			</td>
         </tr>
-		<tr>
-					
-			<td>
-				  Score
-			</td>
+		<tr>		
+			<td>Score</td>
         	<td>
             <?php
 			echo " $score";
@@ -166,15 +185,19 @@
 			</td>
         </tr>
 		<tr>			
-			<td>
-				  Quiz Best Sore 
-			</td>
+			<td>Quiz Best Sore </td>
         	<td>
             <?php
 			echo " $best_score";
 			?>
 			</td>
         </tr>
-      </table>
+	</table>
+</div>
 </body>
 </html>
+<?php
+// clear quiz arrays
+unset($_SESSION['question_ids']);
+unset($_SESSION['student_answer']);
+?>

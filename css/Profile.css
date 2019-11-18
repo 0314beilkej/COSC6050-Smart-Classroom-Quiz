@@ -4,13 +4,14 @@
 
 .fieldset {
 	width: 800px;
-	padding: 50px;
+	padding: 10px;
 	margin-top: 5%;
 	margin-left: 37.5%;
 	border: 1px solid #80ced7;
 	border-radius: 5px;
 	font-size: 1em;
 	font-family: 'Lora', serif;
+	z-index: 999999;
 }
 
 .fieldset .legend {
