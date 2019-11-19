@@ -23,6 +23,7 @@ if ($conn->connect_error) {
 				// Verify entered password against password hash 
 				if (password_verify($password, $password_hash) == 1) {
 					$_SESSION['username'] = $username;
+					$_SESSION['last_activity'] = time();
 					if ($row["role"] == "Teacher") {
 						header('Location: https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php');
 					} else {
