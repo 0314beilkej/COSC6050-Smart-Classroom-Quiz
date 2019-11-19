@@ -50,8 +50,9 @@
 	<!-- Script contains an alert message when clicking on Take Quiz Button-->
 	<script>
  		function showAlert() {
-    	var myText = "Be ready! The quiz will start now. If the time clock runs out, your quiz will be automatically submitted and only the answered questions will count toward your grade!";
-    	alert (myText);
+    	//var myText = "Be ready! The quiz will start now. If the time clock runs out, your quiz will be automatically submitted and only the answered questions will count toward your grade!";
+    	var myText = "Be ready! The quiz will start now!";
+		alert (myText);
  		 }
 	</script>
 

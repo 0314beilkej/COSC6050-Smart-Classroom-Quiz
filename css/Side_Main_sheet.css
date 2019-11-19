@@ -1,6 +1,6 @@
 .wrapper{
   display: flex;
-  position: Fixed;
+  position: fixed;
 }
 
 .wrapper .sidebar{

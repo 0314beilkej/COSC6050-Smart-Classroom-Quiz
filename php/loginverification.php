@@ -11,27 +11,35 @@ if ($conn->connect_error) {
 	$username = filter_input(INPUT_POST, 'username');
 	$password = filter_input(INPUT_POST, 'password');
 
-
-
 	// Validate username and password
-	$checkSQL = "SELECT username, role from users where username = '$username' and password = '$password'";
+	$checkSQL = "SELECT username, role, password_hash from users where username = '$username'";
 	$result = $conn->query($checkSQL);
 		if ($result-> num_rows > 0) {
-			while ($row = $result-> fetch_assoc()) {
-				$_SESSION['username'] = $username;
-				if ($row["role"] == "Teacher") {
-					//header('Location: https://pascal.mscsnet.mu.edu/quiz/TeacherHome.php');
-					header('Location: ../TeacherPages/TeacherHome.php');
+			while ($row = mysqli_fetch_array($result)) {
+				
+				// Get password hash
+				$password_hash = $row['password_hash'];
+	
+				// Verify entered password against password hash 
+				if (password_verify($password, $password_hash) == 1) {
+					$_SESSION['username'] = $username;
+					if ($row["role"] == "Teacher") {
+						header('Location: https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php');
+					} else {
+						header('Location: https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentHome.php');
+					}
 				} else {
-					header('Location: https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentHome.php');
+					echo ("<script>alert('username or password is invalid!')</script>");
+					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/index.html';</script>");
 				}
+				
 			}
 		} else {
 			echo ("<script>alert('username or password is invalid!')</script>");
 			echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/index.html';</script>");
-
-			//eventually want to create an alert saying login unsuccessful
 		}
+		
+		
 }	
 	
 ?>

@@ -82,9 +82,11 @@ if ($conn->connect_error) {
 
 	// If the account information is valid, insert into user table
 	if ($valid === TRUE) {
-		$newUserSQL = "insert into users (username, firstname, lastname, email, password, role) values ('$username', '$firstname', '$lastname', '$email', '$password', '$role')";
+		// Encrypt password
+		$password_hash = password_hash($password, PASSWORD_BCRYPT);
+		$newUserSQL = "insert into users (username, firstname, lastname, email, password, role, password_hash) values ('$username', '$firstname', '$lastname', '$email', '$password', '$role', '$password_hash')";
 		if ($conn->query($newUserSQL) === TRUE) {
-			$checkSQL = "SELECT username, role from users where username = '$username' and password = '$password'";
+			$checkSQL = "SELECT username, role from users where username = '$username'";
 			$result = $conn->query($checkSQL);
 			while ($row = $result-> fetch_assoc()) {
 				$_SESSION['username'] = $username;

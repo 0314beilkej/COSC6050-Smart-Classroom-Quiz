@@ -27,7 +27,7 @@ if ($conn->connect_error) {
 		$updatefnameSQL = "UPDATE users SET firstname = '$firstname' WHERE username = '$username' ";
 		$updatelnameSQL = "UPDATE users SET lastname = '$lastname' WHERE username = '$username' ";
 		$updateemailSQL = "UPDATE users SET email = '$email' WHERE username = '$username' ";
-		$updatepasswordSQL = "UPDATE users SET password = '$password' WHERE username = '$username' ";
+		//$updatepasswordSQL = "UPDATE users SET password = '$password' WHERE username = '$username' ";
 		
 		if(!empty($firstname)){
 			if (mysqli_query($conn, $updatefnameSQL)) {
@@ -74,8 +74,19 @@ if ($conn->connect_error) {
 				echo ("<script>alert('Passwords do not match!')</script>");
 				echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");		
 	
-			} elseif (mysqli_query($conn, $updatepasswordSQL)) {
+			} else {
+				$password_hash = password_hash($password, PASSWORD_BCRYPT);
+				$updatepasswordSQL = "UPDATE users SET password_hash = '$password_hash' WHERE username = '$username'";
+				if ($conn->query($updatepasswordSQL) == true) {
+					echo("<script>alert('Password updated successfully!') </script>");
+					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
+				} else {
+					echo("<script>alert('Password updated failed!') </script>");
+					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/MyProfile.php';</script>");
+				}
+					
 			}
+				
 		}
 		
 		echo("<script>alert('Information updated successfully!') </script>");

@@ -22,30 +22,10 @@
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="../css/HeaderSheet.css">
     <link rel="stylesheet" href="../css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/Questions_style.css">
 	
 	<!-- Insert javascript Modal link-->
 	<script src="../js/Modal_popup.js"></script>
-	
-	<style>
-		table {
-		  
-		  width: 100%;
-		 
-		}
-
-		 th, td {
-		  text-align: left;
-		  padding: 8px;
-		  border-bottom: 1px solid #ddd;
-		}
-
-		 tr:nth-child(even){background-color: #f2f2f2}
-
-		th {
-		  
-		
-		}
-	</style>
 
 	<title>Teacher's Class</title>
 </head>
@@ -100,7 +80,7 @@
 		<!-- Sidebar here -->
  <div class="wrapper">
         <div class="sidebar">
-		<ul>
+			<ul>
          		<li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 				<li class="active"><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
           		<li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li> 
@@ -109,8 +89,9 @@
        		</ul>
        </div>
 		<!--Main content here -->
-        <div class="main_content">
-			<table class="table">
+        <div class="container">
+            <div class="table-wrapper">
+                <table class="table table-striped table-hover">
 				<thead>
 					<tr>
 					  <th>#</th>
@@ -141,9 +122,9 @@
 					<?php
 					}
 					?>
-			  </tbody>
-			</table>
-           
+			    </tbody>
+			   </table>
+			</div>      
         </div> 
 </div>
 <!-- Footer: Used for any page 

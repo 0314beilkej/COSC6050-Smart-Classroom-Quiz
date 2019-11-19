@@ -15,13 +15,10 @@ include('php/connect.php');
 	
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="css/HeaderSheet.css">
-	<link rel="stylesheet" href="css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/Questions_style.css">
 	<link rel="stylesheet" href="css/Profile.css">
     <!--bootstrap-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	<!-- Insert javascript Modal link-->
-	<script src="js/Modal_popup.js"></script>
 	
 	<title>User Profile</title>
 </head>
@@ -70,7 +67,6 @@ include('php/connect.php');
 	   <!-- main content -->
 		<form action="php/UpdateInformation.php" method="POST">
 			<fieldset class="fieldset" >
-
 				<legend class="legend">Personal information:</legend>
 				<img src="images/personal_information.jpg" alt="information" class="marginauto" style="width:775px; height:190px;"> 
 
@@ -93,15 +89,11 @@ include('php/connect.php');
 				<br>					
 				<p>This will erase all your information stored in our database. Are you sure you want to delete your account?</p>
 				<br>
-				<input type="submit" class="btn" value="Delete" name="delete">	
+				<input type="reset" value="Delete" name="delete">	
 			</fieldset>
 		</form>
-
 	</div>
 <main>
-	<div class="content-box">
-		
-	</div>
 </main>
 <!-- Footer: Used for any page 
 	<div id="footer">

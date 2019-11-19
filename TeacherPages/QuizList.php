@@ -23,30 +23,10 @@
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="../css/HeaderSheet.css">
     <link rel="stylesheet" href="../css/Side_Main_sheet.css">
+	<link rel="stylesheet" href="../css/Questions_style.css">
 	
 	<!-- Insert javascript Modal link-->
 	<script src="../js/Modal_popup.js"></script>
-	
-	<style>
-		table {
-		  
-		  width: 100%;
-		 
-		}
-
-		 th, td {
-		  text-align: left;
-		  padding: 8px;
-		  border-bottom: 1px solid #ddd;
-		}
-
-		 tr:nth-child(even){background-color: #f2f2f2}
-
-		th {
-		  
-		
-		}
-	</style>
 
 	<title>Teacher's Class</title>
 </head>
@@ -107,12 +87,13 @@
           		<li class="active"><a href="QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li>
 				<li><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li>
 				<li><a href="./TeacherGrades.php"><i class="fas fa-bar-chart"></i>Grades</a></li>						
-       		</ul>
-       </div>
+			   </ul>
+		</div>
 		<!--Main content here -->
-        <div class="main_content">
-			<table class="table">
-				<thead>
+		<div class="container">
+            <div class="table-wrapper">
+                <table class="table table-striped table-hover">
+                    <thead>
 					<tr>
 					  <th>#</th>
 						<th style="width: 225px;">Quiz Name</th>
@@ -121,7 +102,7 @@
 						<th style="width: 300px;">Num. of Questions</th>
 						<th style="width: 300px;">Num. of Answers</th>
 						<th style="width: 300px;">Num. of Takes Left</th>
-						<th style="width: 300px;">Active</th>
+						<th style="width: 400px;">Active</th>
 
 					</tr>
 			  </thead>
@@ -151,20 +132,20 @@
 						  <td><?php echo $q_ans; ?></td>
 						  <td><?php echo $q_takes; ?></td>
 						  <?php if ($q_active == 0) { ?>
-							<td><button type="button" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Activate Quiz </button></td>
+							<td><button type="button" class="btn_green" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Activate Quiz </button></td>
 						  <?php 
 						  } else if ($q_active == 2) { ?>
-							  <td><button type="button" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Reactivate Quiz </button></td>
+							  <td><button type="button" class="btn_red name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Reactivate Quiz </button></td>
 						  <?php } else { ?>
-							<td><button type="button" name="Close" onclick="window.location.href = '../php/CloseQuiz.php?id=<?php echo $q_id ?>'"> Close Quiz </button></td>
+							<td><button type="button" class="btn_green" name="Close" onclick="window.location.href = '../php/CloseQuiz.php?id=<?php echo $q_id ?>'"> Close Quiz </button></td>
 						  <?php } ?>
 						</tr>
 					<?php
 					}
 					?>
 			  </tbody>
-			</table>
-           
+				</table>
+			</div>
         </div> 
 </div>
 <!-- Footer: Used for any page 

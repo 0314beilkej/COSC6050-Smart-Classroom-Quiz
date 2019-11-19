@@ -1,5 +1,4 @@
-
-.wrapper .container{
+.container{
     width: 1550px;
 }
 .table-wrapper {
@@ -113,3 +112,31 @@ table.table td a.button {
   margin: 4px 2px;
   cursor: pointer;
 }
+
+table.table td .btn_green{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+ 
+  table.table td .btn_red{
+    background-color: #F44336;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  

@@ -74,7 +74,7 @@
 	<i class="fa fa-bars menu-toggle"></i>
 	<ul class="nav"> 
 		<li>
-			<a href="../StudentPages/StudentClass.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
+			<a href="../StudentPages/StudentHome.php"><i class="fa fa-home" style="font-size: 1.5em;"></i></a>
 		</li>
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
@@ -204,7 +204,7 @@
 			</td>
         </tr>
 		<tr>			
-			<td>Best Sore </td>
+			<td>Best Score </td>
         	<td>
             <?php
 			echo " $best_score%";
@@ -213,8 +213,11 @@
         </tr>
 	</table>
 	<br> <br>
-	<input style="margin-left: 40%;" type="submit" name="back" value="Go Back to <?php echo $classname; ?>" onclick="window.location.href = '../StudentPages/StudentClass.php?id=<?php echo $class_id ?>'">
+	<a href="../StudentPages/StudentClass.php?id=<?php echo $class_id;?>"><input style="margin-left: 40px;" type="submit" name="back" value="Go Back to <?php echo $_SESSION['classname']?>" onclick=></a>
+
 </div>
+
+
 </body>
 </html>
 <?php

@@ -99,8 +99,8 @@
 	</header>
 	<!-- Sidebar here -->
 		<!-- Sidebar here -->
-    <div class="wrapper">
-        <div class="sidebar">
+<div class="wrapper">
+    <div class="sidebar">
 		<ul>
           <li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
 	      <li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
@@ -108,16 +108,16 @@
 	      <li class="active"><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li>
 		  <li><a href="./TeacherGrades.php"><i class="fas fa-bar-chart"></i>Grades</a></li>		   
         </ul>
-       </div>
+	</div>	
 	<!--Main content here -->
-        <div class="container">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
+    		<div class="container">
+            	<div class="table-wrapper">
+                	<div class="table-title">
+                    	<div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group col-md-4">
                                         <label>Select Quiz name: </label>&nbsp
-										<select name="quiz_id" class="form-control" maxlength="20" onchange="location = this.value"required>
+									<select name="quiz_id" class="form-control" maxlength="20" onchange="location = this.value"required>
 											<option value= "Questions.php">All Quizzes</option>
 											<?php 
 												// list all quizzes for the teacher and class
@@ -133,12 +133,12 @@
 											<?php 
 												}
 											?>
-										</select>
-                                        <a href="#addQuestionModal" class="btn" data-toggle="modal" <?php if ($quiz_id == "") {echo 'style="visibility: hidden;"';} ?>><i class="material-icons">&#xE147;</i> <span>Add Question</span></a>
+									</select>
+                                    <a href="#addQuestionModal" class="btn" data-toggle="modal" <?php if ($quiz_id == "") {echo 'style="visibility: hidden;"';} ?>><i class="material-icons">&#xE147;</i> <span>Add Question</span></a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                	</div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -186,8 +186,9 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <!-- Add Modal HTML -->
+			</div>
+</div>
+    <!-- Add Modal HTML -->
            <div id="addQuestionModal" class="modal">
                     <form action="../php/CreateQuestion.php" class="form-container" method="POST">
                         <h2>Add a new question</h2>
@@ -270,7 +271,7 @@
                     <input type="submit" class="btn" value="Delete">
                 </form>
             </div>
-    </div>
+    
 <!-- Footer: Used for any page 
 	<div id="footer">
 			<p> MarQuiz </p>

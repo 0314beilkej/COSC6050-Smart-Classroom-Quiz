@@ -14,6 +14,7 @@
     margin-top: 65px;
     margin-left: 400px; 
 }
+
 .icon-section i{
 	font-size: 30px;
 	padding:10px;
@@ -23,6 +24,11 @@
 	margin-bottom: 10px;
 	background-color:#34495E;
 }
+.dashboard .icon-section:hover{
+	background-color: #5a5a5a;
+	cursor: pointer;
+}
+
 .icon-section p{
 	margin:0px;
 	font-size: 20px;
@@ -32,16 +38,16 @@
 	background-color: #2F4254;
 	padding: 5px 0px;
 }
-.dashbord .detail-section:hover{
-	background-color: #5a5a5a;
-	cursor: pointer;
-}
 .detail-section a{
 	color:#fff;
 	text-decoration: none;
 }
 .dashbord-green .icon-section,.dashbord-green .icon-section i{
 	background-color: #16A085;
+}
+.dashbord-green .icon-section:hover{
+	background-color: #5a5a5a;
+	cursor: pointer;
 }
 .dashbord-green .detail-section{
 	background-color: #149077;
@@ -54,3 +60,7 @@
 	background-color:#2573A6;
 }
 
+.dashbord-blue .icon-section:hover{
+	background-color: #5a5a5a;
+	cursor: pointer;
+}
