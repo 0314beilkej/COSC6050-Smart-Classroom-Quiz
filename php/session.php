@@ -1,9 +1,9 @@
 <?php
 session_start();
+include('connect.php');
 
-// Check if username exists
+// Check if username exists for the session
  if (!isset($_SESSION['username'])) {
-        //echo ("<script>alert('Please log in again.')</script>");
 		echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/index.html';</script>");
 } else {
 	$now = time(); // Checking the time now when home page starts.
@@ -16,36 +16,24 @@ session_start();
 	}
 	else {  
 		// Session is valid. Get session variables
-		$servername = "localhost";
-		$DBusername = "quizuser";
-		$DBpassword = "classquiz";
-		$DBname = "quiz";
 		$_SESSION['last_activity'] = time();
-
-		// Create connection
-		$conn = new mysqli($servername, $DBusername, $DBpassword, $DBname);
 		$username = $_SESSION['username'];
 
 		// Check connection
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 		} else {
+			// Get user information
 			$checkSQL = "SELECT * from users where username = '$username'";
 			$result = $conn->query($checkSQL);
 			
-			
 			while ($row = $result-> fetch_assoc()){
 				$name = $row['firstname'] ." ". $row['lastname']." ";
-			$_SESSION['name'] = $name;
-			$_SESSION['role'] = $row['role'];
-			$_SESSION['email'] = $row['email'];
+				$_SESSION['name'] = $name;
+				$_SESSION['role'] = $row['role'];
+				$_SESSION['email'] = $row['email'];
 			}
 		}
 	}
 }
-
-
-
-// destroy the session 
-//session_destroy(); 
 ?>

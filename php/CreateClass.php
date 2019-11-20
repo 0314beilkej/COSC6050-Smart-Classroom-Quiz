@@ -31,6 +31,13 @@ if ($conn->connect_error) {
 			$codeExists = false;
 		} 
 	}
+	
+	// Subject is a required field
+	if (empty($subject)) {
+		$valid = false;
+		echo("<script>alert('Subject is a required. Please select a subject to classify your class.')</script>");
+		echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
+	}
 
 	// Check if a classname exists
 	if ($valid === TRUE){

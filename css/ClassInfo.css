@@ -64,3 +64,9 @@
 	background-color: #5a5a5a;
 	cursor: pointer;
 }
+
+.scroll {
+	width: 100px;
+	height: 100px;
+	overflow: scroll;
+}

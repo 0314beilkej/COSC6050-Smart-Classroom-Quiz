@@ -50,7 +50,7 @@ include('../php/connect.php');
 			<h2>Create class</h2>
 				<input id="classname" name="classname" placeholder="Class Name" type="text" required>
 				<select id="subject" name="subject" required>
-				<option name="">--Subject--</option>
+				<option value="">--Subject--</option>
 				<?php 
 					$query = "select subject from subject_image";
 					$query_run = $conn->query($query);

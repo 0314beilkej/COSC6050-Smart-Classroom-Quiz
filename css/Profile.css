@@ -21,7 +21,7 @@
 	margin-left: 20px;
 }
 
-.fieldset input[type=submit] {
+.fieldset input[name=submit] {
   background-color: #4CAF50;
   border: none;
   color: white;
@@ -36,7 +36,7 @@
 }
 
 
-.fieldset input[type=reset] {
+.fieldset input[name=delete] {
   background-color: #F44336;
   border: none;
   color: white;

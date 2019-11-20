@@ -89,7 +89,7 @@ include('php/connect.php');
 				<br>					
 				<p>This will erase all your information stored in our database. Are you sure you want to delete your account?</p>
 				<br>
-				<input type="reset" value="Delete" name="delete">	
+				<input type="submit" value="Delete" name="delete">	
 			</fieldset>
 		</form>
 	</div>

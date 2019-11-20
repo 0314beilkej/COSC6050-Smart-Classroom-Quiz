@@ -102,7 +102,8 @@
         </ul>
        </div>
 		<!--Main content here -->
-        <div class="main-section">
+        <p class="scroll">
+		<div class="main-section">
             <div class="dashbord">
                 <div class="icon-section">
                     <i class="fas fa-lock-open" aria-hidden="true"></i><br>

@@ -84,7 +84,7 @@ if ($conn->connect_error) {
 	if ($valid === TRUE) {
 		// Encrypt password
 		$password_hash = password_hash($password, PASSWORD_BCRYPT);
-		$newUserSQL = "insert into users (username, firstname, lastname, email, password, role, password_hash) values ('$username', '$firstname', '$lastname', '$email', '$password', '$role', '$password_hash')";
+		$newUserSQL = "insert into users (username, firstname, lastname, email, role, password_hash) values ('$username', '$firstname', '$lastname', '$email', '$role', '$password_hash')";
 		if ($conn->query($newUserSQL) === TRUE) {
 			$checkSQL = "SELECT username, role from users where username = '$username'";
 			$result = $conn->query($checkSQL);

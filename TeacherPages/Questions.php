@@ -44,7 +44,7 @@
 				var link = this;
 				var deleteModal = $("#deleteQuestionModal");
 				// store the ID inside the modal's form
-				deleteModal.find('input[name=id]').val(this.dataset.id2);
+				deleteModal.find('input[name=q_id]').val(this.dataset.id);
 			});
 		});
     </script>
@@ -177,7 +177,7 @@
 									<td><?php echo $row_answer; ?></td>
 									<td>
 										<a href="#editQuestionModal<?php echo $row_question_id?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>" data-id-2="15"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+										<a href="#deleteQuestionModal" class="delete" data-toggle="modal" data-id="<?php echo $row_question_id; ?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 									</td>
 								</tr>
 							<?php
@@ -260,15 +260,15 @@
 				<?php } ?>
             <!-- Delete Modal HTML -->
             <div id="deleteQuestionModal" class="modal">
-                <form action = "../php/DeleteQuestion.php" method="GET" class="form-container">
+                <form action = "../php/DeleteQuestion.php" method="POST" class="form-container">
                     <br>
                     <h4>Delete Question</h4>
                     <br>					
                     <p>Are you sure you want to delete this question?</p>
                     <br>
-					<input type="button" name="id" value="id" />
+					<input type="hidden" name="q_id" value="id" />
                     <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn" value="Delete">
+                    <button type="submit" class="btn" name="Delete"> Delete </input>
                 </form>
             </div>
     
