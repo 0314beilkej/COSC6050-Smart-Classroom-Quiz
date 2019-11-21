@@ -69,7 +69,7 @@
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
-			<ul style="left: 0px;">
+			<ul style="left: 0px; 	z-index: 100;">
 				<li><a href="#" onclick="ClickCreate()">Create Quiz</a></li>
 			</ul>
 		</li>
@@ -83,17 +83,23 @@
 		</li>
 	</ul>
 	<!-- The Modal for Create Quiz -->
-	<div id="myModal0" class="modal">
-			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
-				<h2>Create Quiz</h2>
-					<p>Enter the title of the quiz here.</p>
-					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
-					<p>Give a quick description for the quiz (less than 100 characters).</p>
-					<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" required>
-					<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
-					<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
-			</form>
-		</div>
+	<div id="myModal0" class="modal" style="top: 250px;">
+		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<h2>Create Quiz</h2>
+				<p>Enter the title of the quiz here.</p>
+				<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
+				<p>Give a quick description for the quiz (less than 100 characters).</p>
+				<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" required>
+				<p>Enter the time limit for the quiz.</p>
+				<input id="timelimit" name="timelimit" placeholder="Time Limit (minutes)" type="text" required>
+				<p>Enter the number of questions that should be included for this quiz. </p>
+				<input id="numquestions" name="numquestions" placeholder="Number of Questions" type="text" required>
+				<p>Enter the maximum number of attempts students should have. </p>
+				<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
+				<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
+				<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+		</form>
+	</div>
 	<!--End of the Modal-->	
 		
 	</header>

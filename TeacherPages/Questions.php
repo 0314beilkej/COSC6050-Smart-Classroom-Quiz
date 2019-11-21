@@ -69,7 +69,7 @@
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
-			<ul style="left: 0px;">
+			<ul style="left: 0px; 	z-index: 100;">
 				<li><a href="#" onclick="ClickCreate()">Create Quiz</a></li>
 			</ul>
 		</li>
