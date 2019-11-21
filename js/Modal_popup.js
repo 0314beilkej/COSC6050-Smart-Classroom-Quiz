@@ -18,9 +18,9 @@
     }
  //Function To Display Popup for create quiz
  function ClickCreate() {
-  document.getElementById('myModal0').style.display = "block";
+  document.getElementById("addQuizModal").style.display = "block";
   }
 //Function to Hide Popup
   function closeForm4() {
-      document.getElementById("myModal0").style.display = "none";
+      document.getElementById("addQuizModal").style.display = "none";
     }

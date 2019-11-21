@@ -21,6 +21,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Candal|Lora&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,400,500,600" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet">
     
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="../css/HeaderSheet.css">
@@ -83,17 +84,23 @@
 		</li>
 	</ul>
 	<!-- The Modal for Create Quiz -->
-	<div id="myModal0" class="modal">
-			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
-				<h2>Create Quiz</h2>
-					<p>Enter the title of the quiz here.</p>
-					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
-					<p>Give a quick description for the quiz (less than 100 characters).</p>
-					<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" required>
-					<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
-					<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
-			</form>
-		</div>
+	<div id="addQuizModal" class="modal" style="">
+		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<h2>Create Quiz</h2>
+			<p>Enter the title of the quiz here.</p>
+			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
+			<p>Give a quick description for the quiz (less than 100 characters).</p>
+			<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" maxlength="100" required>
+			<p>Enter the time limit for the quiz.</p>
+			<input id="timelimit" name="timelimit" placeholder="Time Limit (minutes)" type="text" required>
+			<p>Enter the number of questions that should be included for this quiz. </p>
+			<input id="numquestions" name="numquestions" placeholder="Number of Questions" type="text" required>
+			<p>Enter the maximum number of attempts students should have. </p>
+			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
+			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
+			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+		</form>
+	</div>
 	<!--End of the Modal-->	
 		
 	</header>
@@ -125,6 +132,7 @@
 												$class_id = $_SESSION['class_id'];
 												$query = "select quiz_name, quiz_id from quizzes where instructor_id = '$instructor_id' and class_id ='$class_id'";
 												$query_run = $conn->query($query);
+												
 												while($row = mysqli_fetch_array($query_run)){
 													$row_quiz_name = $row['quiz_name'];
 													$row_quiz_id = $row['quiz_id'];
@@ -132,6 +140,7 @@
 												<option value= "Questions.php?id=<?php echo $row_quiz_id; ?>" <?php if ($row_quiz_id == $quiz_id) { echo "selected";}?>><?php echo $row_quiz_name; ?></option>
 											<?php 
 												}
+												
 											?>
 									</select>
                                     <a href="#addQuestionModal" class="btn" data-toggle="modal" <?php if ($quiz_id == "") {echo 'style="visibility: hidden;"';} ?>><i class="material-icons">&#xE147;</i> <span>Add Question</span></a>
@@ -161,7 +170,7 @@
 								$count = 0;
 								$query_run = $conn->query($question_query);
 								while($row = mysqli_fetch_array($query_run)){
-										$count = $count+1;
+										$count++;
 										$row_question = $row['question'];
 										$row_answer = $row['answer'];
 										$row_question_id = $row['question_id'];
@@ -186,6 +195,16 @@
                         </tbody>
                     </table>
                 </div>
+				<?php 
+					// if this quiz has no questions, prompt the user to add some
+					if ($count == 0) {
+				?>
+				<br>
+				<br>
+				<p style="margin-left: 25%; "> You haven't added any questions to this quiz yet!  Click 'Add Question' to start filling up your question bank. </p>
+				<?php
+					}
+				?>
 			</div>
 </div>
     <!-- Add Modal HTML -->

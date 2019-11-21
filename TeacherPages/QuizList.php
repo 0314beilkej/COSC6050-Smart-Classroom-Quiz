@@ -63,17 +63,23 @@
 		</li>
 	</ul>
 	<!-- The Modal for Create Quiz -->
-	<div id="myModal0" class="modal">
-			<form action="../php/CreateQuiz.php" class="form-container" method="POST">
-				<h2>Create Quiz</h2>
-					<p>Enter the title of the quiz here.</p>
-					<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
-					<p>Give a quick description for the quiz (less than 100 characters).</p>
-					<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" required>
-					<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
-					<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
-			</form>
-		</div>
+	<div id="addQuizModal" class="modal" style="">
+		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<h2>Create Quiz</h2>
+			<p>Enter the title of the quiz here.</p>
+			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
+			<p>Give a quick description for the quiz (less than 100 characters).</p>
+			<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" maxlength="100" required>
+			<p>Enter the time limit for the quiz.</p>
+			<input id="timelimit" name="timelimit" placeholder="Time Limit (minutes)" type="text" required>
+			<p>Enter the number of questions that should be included for this quiz. </p>
+			<input id="numquestions" name="numquestions" placeholder="Number of Questions" type="text" required>
+			<p>Enter the maximum number of attempts students should have. </p>
+			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
+			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
+			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+		</form>
+	</div>
 	<!--End of the Modal-->	
 	
 	</header>
@@ -100,8 +106,7 @@
 						<th style="width: 500px;">Description</th>
 						<th style="width: 300px;">Time Limit (min)</th>
 						<th style="width: 300px;">Num. of Questions</th>
-						<th style="width: 300px;">Num. of Answers</th>
-						<th style="width: 300px;">Num. of Takes Left</th>
+						<th style="width: 300px;">Num. of Attempts</th>
 						<th style="width: 400px;">Active</th>
 
 					</tr>
@@ -119,7 +124,6 @@
 						$q_desp = $row['quiz_description'];
 						$q_time = $row['time_limit'];
 						$q_quest = $row['num_questions'];
-						$q_ans = $row['num_answer'];
 						$q_takes = $row['max_attempt'];
 						$q_active=$row['active'];
 					?>
@@ -129,7 +133,6 @@
 						  <td><?php echo $q_desp; ?></td>
 						  <td><?php echo $q_time; ?></td>
 						  <td><?php echo $q_quest; ?></td>
-						  <td><?php echo $q_ans; ?></td>
 						  <td><?php echo $q_takes; ?></td>
 						  <?php if ($q_active == 0) { ?>
 							<td><button type="button" class="btn_green" name="Activate" onclick="window.location.href = '../php/ActivateQuiz.php?id=<?php echo $q_id ?>'"> Activate Quiz </button></td>

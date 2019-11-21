@@ -127,6 +127,24 @@ header .menu-toggle{
 	
   }
   
+ /* Create Quiz Modal */
+ #addQuizModal {
+	 top: 35%;
+	 left: 45%;
+	 width: auto;
+	 height: auto;
+	 max-height: 800px;
+ }
+ 
+ #addQuizModal .form-container {
+	 max-height: 800px;
+ }
+  
+body .modal-open {
+  overflow: hidden;
+  position:fixed;
+}
+
   /* Add styles to the form container */
 .form-container {
 	max-width: 1000%;
@@ -200,3 +218,4 @@ header .menu-toggle{
   .form-container .btn:hover, .open-button:hover {
 	opacity: 1;
   }
+  
