@@ -9,6 +9,22 @@
 	$quiz_id = substr($URI, 36);
 	$quiz_id = $_GET['id'];
 	$_SESSION['quiz_id'] = $quiz_id;
+	
+	$quiz_id= $_SESSION['quiz_id'];
+	$class_id= $_SESSION['class_id'];
+	$duration="";
+	//$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id' AND a.quiz_id='$quiz_id'";
+	$res= "SELECT a.time_limit, a.quiz_id FROM quizzes a WHERE quiz_id='$quiz_id'";
+	$res_run = $conn->query($res);
+	while($row1= mysqli_fetch_array($res_run)){
+		$duration = $row1['time_limit'];
+	}
+	
+	$_SESSION['time_limit'] = $duration;
+	$timeout = $duration * 60000;
+	$_SESSION['start_time'] = date("Y-m-d H:i:s");
+	$end_time = date('Y-m-d H:i:s', strtotime('+'.$_SESSION['time_limit'].'minutes', strtotime($_SESSION['start_time'])));
+	$_SESSION['end_time'] = $end_time;
 ?>
 
 <html>
@@ -30,9 +46,18 @@
     <!--bootstrap-->
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+	<!-- Timeout script -->
+	<script >
+        window.onload = function(){
+			var timeout = <?php echo $timeout; ?>;
+		   setInterval("document.quiz.submit.click()", timeout);
+		};
+	
+    </script>
+
 	<title>Take Quiz</title>
 </head>
-<body>
+<body >
 	<!-- Top Navigation  -->
 	<header>
 	<div class="logo">
@@ -59,19 +84,7 @@
                 <h1> Quiz is Starting </h1>
 			<!--Countdown Timer Code-->
 				<?php
-					$quiz_id= $_SESSION['quiz_id'];
-					$class_id= $_SESSION['class_id'];
-					$duration="";
-					//$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id' AND a.quiz_id='$quiz_id'";
-					$res= "SELECT a.time_limit, a.quiz_id FROM quizzes a WHERE quiz_id='$quiz_id'";
-					$res_run = $conn->query($res);
-					while($row1= mysqli_fetch_array($res_run)){
-						$duration = $row1['time_limit'];
-					}
-					$_SESSION['time_limit'] = $duration;
-					$_SESSION['start_time'] = date("Y-m-d H:i:s");
-					$end_time = date('Y-m-d H:i:s', strtotime('+'.$_SESSION['time_limit'].'minutes', strtotime($_SESSION['start_time'])));
-					$_SESSION['end_time'] = $end_time;
+					
 				?>
 				<b><h2 id="response"></h2></b>
 				<script type="text/javascript">
@@ -100,22 +113,6 @@
 		<section id="results">
 			<form action="../php/ScoreQuiz.php" method="POST" name="quiz">
 				<?php 
-					/* $quiz_id= $_SESSION['quiz_id'];
-					$class_id = $_SESSION['class_id'];
-					$query= "SELECT distinct b.question_id, b.quiz_id, b.question, b.ans_a, b.ans_b, b.ans_c, b.ans_d, b.true_ans, c.class_id FROM  questions b, quizzes c WHERE c.class_id = '$class_id'"; 
-					$query_run = $conn->query($query);
-					$count = 0;
-					while($rows= mysqli_fetch_array($query_run))
-					{
-						$count++;
-						$question = $rows['question'];
-						$question_id = $rows['question_id'];
-						$ans_a = $rows['ans_a'];
-						$ans_b = $rows['ans_b'];
-						$ans_c = $rows['ans_c'];
-						$ans_d = $rows['ans_d'];
-						$true_ans = $rows['true_ans'];	 */	
-						
 					// use GenerateQuiz function to populate questions
 					
 					$count = 1;

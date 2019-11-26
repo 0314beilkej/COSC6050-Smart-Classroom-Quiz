@@ -30,34 +30,20 @@
 	<!-- Material Kit CSS -->
 	<link rel="stylesheet" href="../css/HeaderSheet.css">
 	<link rel="stylesheet" href="../css/TakeQuiz_style.css">
+	<link rel="stylesheet" href="../css/ScoreQuiz.css">
 
     <!--bootstrap-->
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Score Quiz</title>
-	<style>
-		#results {
-   		border-collapse: collapse;
-  		width: 100%;
-	}
 
-#results td, #results caption {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
+	<script type="text/javascript">
+	history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+	window.addEventListener('popstate', function(event) {
+		window.location.assign("../StudentPages/StudentClass.php");
+	});
+</script>
 
-#results tr:nth-child(even){background-color: #f2f2f2;}
-
-#results tr:hover {background-color: #ddd;}
-
-#results caption {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #ffa31a;
-  color: white;
-}
-</style>
 </head>
 <body>
 	<!-- Top Navigation  -->
