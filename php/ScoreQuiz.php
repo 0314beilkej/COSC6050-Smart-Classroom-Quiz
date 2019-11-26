@@ -38,11 +38,11 @@
 	<title>Score Quiz</title>
 
 	<script type="text/javascript">
-	history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
-	window.addEventListener('popstate', function(event) {
-		window.location.assign("../StudentPages/StudentClass.php");
-	});
-</script>
+		history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+		window.addEventListener('popstate', function(event) {
+			window.location.assign("../StudentPages/StudentClass.php");
+		});
+	</script>
 
 </head>
 <body>

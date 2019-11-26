@@ -52,8 +52,20 @@
 			var timeout = <?php echo $timeout; ?>;
 		   setInterval("document.quiz.submit.click()", timeout);
 		};
-	
     </script>
+	
+	<!-- Back button should score the quiz -->
+	<script type="text/javascript">
+		history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+		window.addEventListener('popstate', function(event) {
+			var r = confirm("Your quiz will be scored as is! Are you sure you want to leave the page?");
+			if (r == true) {
+				document.quiz.submit.click();
+			} else {
+				history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+			}
+		});
+	</script>
 
 	<title>Take Quiz</title>
 </head>
@@ -173,7 +185,7 @@
 	<script>
 		// Warning before leaving the page (back button, or outgoinglink)
 		window.onbeforeunload = function() { 
-			return "Are you sure you want to leave this page?"; 
+			//return "Are you sure you want to leave this page?"; 
 		};
 	</script>
 </body>
