@@ -61,7 +61,7 @@
 		</li>
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
-			<ul style="left: 0px;">
+			<ul style="left: 0px; z-index: 100;">
 				<li><a href="#" onclick="ClickCreate()">Create Quiz</a></li>
 			</ul>
 		</li>
@@ -77,6 +77,7 @@
 	<!-- The Modal for Create Quiz -->
 	<div id="addQuizModal" class="modal" style="">
 		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<br>
 			<h2>Create Quiz</h2>
 			<p>Enter the title of the quiz here.</p>
 			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
@@ -90,6 +91,7 @@
 			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
 			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
 			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+			<br> <br>
 		</form>
 	</div>
 	<!--End of the Modal-->	
@@ -109,7 +111,7 @@
        </div>
 		<!--Main content here -->
         <p class="scroll">
-		<div class="main-section">
+		<div class="main-section" style="width: 100%; padding-right: 25%; overflow:auto;">
             <div class="dashbord">
                 <div class="icon-section">
                     <i class="fas fa-lock-open" aria-hidden="true"></i><br>
@@ -128,6 +130,14 @@
 			while($row= mysqli_fetch_array($query_run))
 				$count = $row['count'];
 			{
+			
+			$classid = $_SESSION['class_id'];
+			$quizquery = "SELECT COUNT(*) as count2 FROM quizzes WHERE class_id = '$classid'";
+			$quizquery_run = $conn->query($quizquery);
+			while($row2 =  mysqli_fetch_array($quizquery_run))
+				$count2 = $row2['count2'];
+			
+			
 			?>
 			
 				<div class="icon-section">
@@ -139,14 +149,15 @@
 			<?php
 				}
 			?>
-		</div>
+		</div> 
             <div class="dashbord dashbord-blue">
                 <div class="icon-section">
                     <i class="fa fa-tasks" aria-hidden="true"></i><br>
                     <strong>Total Quizzes</strong>
-                    <p>0</p>
+                    <p><?php echo $count2?></p>
                 </div>
             </div>
+			<br><br><br><br><br>
         </div>
 </div>
 <!-- Footer: Used for any page 

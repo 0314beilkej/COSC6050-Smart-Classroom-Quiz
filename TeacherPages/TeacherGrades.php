@@ -52,6 +52,29 @@
     <title>Grades</title>
 </head>
 <body>
+
+	<!-- The Modal for Create Quiz -->
+	<div id="addQuizModal" class="modal" style="">
+		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<br>
+			<h2>Create Quiz</h2>
+			<p>Enter the title of the quiz here.</p>
+			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
+			<p>Give a quick description for the quiz (less than 100 characters).</p>
+			<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" maxlength="100" required>
+			<p>Enter the time limit for the quiz.</p>
+			<input id="timelimit" name="timelimit" placeholder="Time Limit (minutes)" type="text" required>
+			<p>Enter the number of questions that should be included for this quiz. </p>
+			<input id="numquestions" name="numquestions" placeholder="Number of Questions" type="text" required>
+			<p>Enter the maximum number of attempts students should have. </p>
+			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
+			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
+			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+			<br><br>
+		</form>
+	</div>
+	<!--End of the Modal-->	
+	
 	<!-- Top Navigation  -->
 	<header>
 	<div class="logo">
@@ -70,7 +93,7 @@
 		<li><a href="#0">
 			<i class="fa fa-plus " style="font-size: 1.5em;"></i></a>
 			<ul style="left: 0px; 	z-index: 100;">
-				<li><a href="#" onclick="ClickCreate()">Create Quiz</a></li>
+				<li><a class="modal-button" href="#" onclick="ClickCreate()">Create Quiz</a></li>
 			</ul>
 		</li>
 		
@@ -82,30 +105,14 @@
 			</ul>
 		</li>
 	</ul>
-	<!-- The Modal for Create Quiz -->
-	<div id="addQuizModal" class="modal" style="">
-		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
-			<h2>Create Quiz</h2>
-			<p>Enter the title of the quiz here.</p>
-			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
-			<p>Give a quick description for the quiz (less than 100 characters).</p>
-			<input id="quizdescription" name="quizdescription" placeholder="Quiz Description" type="text" maxlength="100" required>
-			<p>Enter the time limit for the quiz.</p>
-			<input id="timelimit" name="timelimit" placeholder="Time Limit (minutes)" type="text" required>
-			<p>Enter the number of questions that should be included for this quiz. </p>
-			<input id="numquestions" name="numquestions" placeholder="Number of Questions" type="text" required>
-			<p>Enter the maximum number of attempts students should have. </p>
-			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
-			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
-			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
-		</form>
-	</div>
-	<!--End of the Modal-->	
+	
 		
 	</header>
 	<!-- Sidebar here -->
 		<!-- Sidebar here -->
     <div class="wrapper">
+	    
+	
         <div class="sidebar">
 		<ul>
           <li><a href="./TeacherClass.php"><i class="fas fa-info-circle"></i>Class info</a></li>
@@ -211,6 +218,7 @@
 							?>
                         </tbody>
                     </table>
+					<br><br><br>
                 </div>
             </div> 
     </div>

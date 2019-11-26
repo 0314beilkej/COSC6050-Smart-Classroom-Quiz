@@ -5,6 +5,7 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
+  -ms-overflow-style: none; 
   
 }
 
@@ -14,7 +15,7 @@ body {
 	background: #f3f5f9;
 	font-family: 'Lora', serif;
 	position: relative;
-	
+	overflow: auto;
 }
 
 header{
@@ -129,20 +130,25 @@ header .menu-toggle{
   
  /* Create Quiz Modal */
  #addQuizModal {
-	 top: 35%;
+	 position: fixed;
 	 left: 45%;
 	 width: auto;
-	 height: auto;
-	 max-height: 800px;
+	 height: 500px;
+	 max-height: 500px;
+	 overflow: auto;
+	transform: translate(0%, -25%);
  }
  
  #addQuizModal .form-container {
-	 max-height: 800px;
+	 height: 100%;
+	 overflow: auto;
+	 margin-bottom: 10px;
  }
   
+/* rest of the page shouldn't scroll while modal is open */
 body .modal-open {
   overflow: hidden;
-  position:fixed;
+  position:fixed; 
 }
 
   /* Add styles to the form container */
@@ -218,4 +224,28 @@ body .modal-open {
   .form-container .btn:hover, .open-button:hover {
 	opacity: 1;
   }
+  
+ /* for scrolling */
+  .wrapper {
+	  height: 100%;
+	  overflow: auto;
+  }
+  
+  .container {
+	  overflow: auto;
+  }
+  
+  .sidebar {
+	  overflow: auto;
+  }
+  
+ /* Make scrollbars invisible */
+ .element { 
+	overflow: -moz-scrollbars-none;
+}
+ 
+ ::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
   

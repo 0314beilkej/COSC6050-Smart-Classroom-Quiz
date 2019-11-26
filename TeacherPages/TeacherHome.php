@@ -58,7 +58,7 @@ include('../php/connect.php');
 					{
 						$subject_name = $row['subject'];
 				?>
-						<option name= <?php echo $subject_name ?> value=<?php echo $subject_name ?> ><?php echo $subject_name ?> </option>
+						<option name= <?php echo $subject_name ?> value="<?php echo $subject_name ?>" ><?php echo $subject_name ?> </option>
 				<?php } ?>
 				</select>
 				<button type="submit" name="btn create" class="btn"  id="submit">Create</button>

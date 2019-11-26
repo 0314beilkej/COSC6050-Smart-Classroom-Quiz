@@ -20,6 +20,8 @@ include('../php/connect.php');
 	<script src="../js/Modal_popup.js"></script>
 	
 	<title>Student's Homepage</title>
+	
+	
 </head>
 <body>
 	<!-- Top Navigation  -->
@@ -68,10 +70,33 @@ include('../php/connect.php');
 			$class_code = $row["class_code"];
 			$class_id = $row["class_id"];
 			$img = "../images/class_images/" . $row["image"];
+			
+			$new_quiz = "select 'x'
+							from quizzes a, enrollment b
+							where a.class_id = b.class_id
+							and b.student_id = '$username'
+							and b.class_id = '$class_id'
+							and not exists 
+								(select 'x'
+								 from scores c
+								 where c.student_id = b.student_id
+								 and c.quiz_id = a.quiz_id)
+							and a.active = 1";
+			$new_quiz_run = $conn->query($new_quiz);
+			$new_quiz_result = mysqli_num_rows($new_quiz_run);
+			
 		?>
 			<div class="content-img">
 				<a href="./StudentClass.php?id=<?php echo $class_id?>" >
 					<img src=<?php echo $img?> width= "270px" height="195px"/> 
+					<?php 
+					// If the student has open quizzes they have not taken yet, display the 'new quiz' notification
+					if ($new_quiz_result > 0) {
+					?>
+					<span class="notify-badge">New Quiz!</span>
+					<?php 
+					}
+					?>
 					<h2 class="content-title"> <?php echo $classname?> </h2>
 				</a>
 			</div>

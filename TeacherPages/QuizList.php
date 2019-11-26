@@ -65,6 +65,7 @@
 	<!-- The Modal for Create Quiz -->
 	<div id="addQuizModal" class="modal" style="">
 		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<br>
 			<h2>Create Quiz</h2>
 			<p>Enter the title of the quiz here.</p>
 			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
@@ -78,6 +79,7 @@
 			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
 			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
 			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+			<br><br>
 		</form>
 	</div>
 	<!--End of the Modal-->	
@@ -147,7 +149,9 @@
 					}
 					?>
 			  </tbody>
+			  
 				</table>
+				<br><br><br><br>
 			</div>
         </div> 
 </div>

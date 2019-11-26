@@ -76,24 +76,29 @@
 				<b><h2 id="response"></h2></b>
 				<script type="text/javascript">
 					 var x = setInterval(fun1,1000);
- 					 setTimeout('xx()',60000);
+ 					 //setTimeout('submitForm()',$time_lapse);
  					function fun1(){
  					var xmlhttp = new XMLHttpRequest();
   					xmlhttp.open("GET","../php/QuizTime.php",false);
  					xmlhttp.send(null);
   					var str = document.getElementById("response").innerHTML=xmlhttp.responseText;
+					  if(xmlhttp.responseText == "Time Out!"){
+						clearInterval(x);
+        				document.quiz.submit();
+						submitForm();
+					  }
+					  
 					}
- 					function xx(){
-   					clearInterval(x);
-  					window.location.href='../php/ScoreQuiz.php';
- 				 }
+ 					function submitForm(){
+  						window.location.href='../php/ScoreQuiz.php';
+ 					}
   				</script>		
 			<!--End of Countdown Timer Code-->
 
 				<hr style="border-top: dotted 1px;" /><br>
 			<!-- Display student quiz questions -->
 		<section id="results">
-			<form action="../php/ScoreQuiz.php" method="POST" id="quiz">
+			<form action="../php/ScoreQuiz.php" method="POST" name="quiz">
 				<?php 
 					/* $quiz_id= $_SESSION['quiz_id'];
 					$class_id = $_SESSION['class_id'];
@@ -159,10 +164,20 @@
 			</form>				
 		</section>
 
+		
+
+
+
     </div>        
 	<!-- Footer: Used for any page 
 	<div id="footer">
 			<p> MarQuiz </p>
 	</div>-->
+	<script>
+		// Warning before leaving the page (back button, or outgoinglink)
+		window.onbeforeunload = function() { 
+			return "Are you sure you want to leave this page?"; 
+		};
+	</script>
 </body>
 </html>

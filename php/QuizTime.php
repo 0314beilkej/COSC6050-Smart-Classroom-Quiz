@@ -17,7 +17,7 @@ unset(
         $_SESSION['end_time'],
         $_SESSION['time_limit'],
 );
-echo "Time Out";
+echo "Time Out!";
 }
 else
 {

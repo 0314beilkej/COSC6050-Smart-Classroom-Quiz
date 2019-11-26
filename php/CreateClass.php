@@ -11,8 +11,8 @@ if ($conn->connect_error) {
 
 	// Get form data 
 	$classname = filter_input(INPUT_POST, 'classname');
-    $subject = $_POST['subject'];
-	
+    //$subject = $_POST['subject'];
+	$subject = filter_input(INPUT_POST,'subject');
 	// Insert escape characters into strings that include single quotes
 	$classname = str_replace("'", "\'", $classname);
 	
@@ -57,8 +57,10 @@ if ($conn->connect_error) {
 			echo("<script>alert('New class created successfully! Class Code: ".$classcode."')</script>");
             echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
-            //echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
+			$sql_error = "SQL Error: " . $sql . "<br>" . $conn->error;
+			echo("<script>alert('Error with sql statement ".$newClassSQL. "')</script>");
+			echo("<script>alert('".$sql_error. "')</script>");
+            echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 
 		}
     }

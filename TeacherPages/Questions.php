@@ -86,6 +86,7 @@
 	<!-- The Modal for Create Quiz -->
 	<div id="addQuizModal" class="modal" style="">
 		<form action="../php/CreateQuiz.php" class="form-container" method="POST">
+			<br>
 			<h2>Create Quiz</h2>
 			<p>Enter the title of the quiz here.</p>
 			<input id="quizname" name="quizname" placeholder="Quiz Title" type="text" required>
@@ -99,6 +100,7 @@
 			<input id="numattempts" name="numattempts" placeholder="Max Number of Attempts" type="text" required>
 			<button type="submit" name="btn create" class="btn"  id="submit">Submit</button>
 			<button type="button" name="btn cancel" class="btn cancel" onclick="closeForm4()">Cancel</button>
+			<br> <br>
 		</form>
 	</div>
 	<!--End of the Modal-->	
@@ -113,12 +115,12 @@
 	      <li><a href="./ClassList.php"><i class="fas fa-users"></i>Class List</a></li>
           <li><a href="./QuizList.php"><i class="fas fa-list"></i>Quizzes</a></li>
 	      <li class="active"><a href="./Questions.php"><i class="fas fa-question-circle"></i>Questions</a></li>
-		  <li><a href="./TeacherGrades.php"><i class="fas fa-bar-chart"></i>Grades</a></li>		   
+		  <li><a href="./TeacherGrades.php"><i class="fas fa-bar-chart"></i>Grades</a></li>	
         </ul>
 	</div>	
 	<!--Main content here -->
-    		<div class="container">
-            	<div class="table-wrapper">
+    		<div class="container" style="overflow: auto;">
+            	<div class="table-wrapper" >
                 	<div class="table-title">
                     	<div class="row">
                             <div class="col-sm-6">
@@ -148,7 +150,7 @@
                             </div>
                         </div>
                 	</div>
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -194,6 +196,7 @@
 							?>
                         </tbody>
                     </table>
+					<br> <br> <br>
                 </div>
 				<?php 
 					// if this quiz has no questions, prompt the user to add some
