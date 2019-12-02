@@ -12,6 +12,7 @@
 	$quiz_id = $_SESSION['quiz_id'];
 	$class_id = $_SESSION['class_id'];
 	$classname = $_SESSION['classname'];
+	$_SESSION['quiz_started'] = false;
 
 ?>
 
@@ -96,16 +97,75 @@
 		
 		foreach ($_SESSION['question_ids'] as $index=>$cur_question_id){
 			$student_ans = $_POST['quizcheck'.$index.''];
-			$ans_query = "select true_ans from questions where question_id = '$cur_question_id'";
+			$ans_query = "select * from questions where question_id = '$cur_question_id'";
 			$ans_run = $conn->query($ans_query);
 			$ans_row = mysqli_fetch_array($ans_run);
+			$ques = $ans_row['question'];
 			$true_ans = $ans_row['true_ans'];
+			$ans_a = $ans_row['ans_a'];
+			$ans_b = $ans_row['ans_b'];
+			$ans_c = $ans_row['ans_c'];
+			$ans_d = $ans_row['ans_d'];
 			if ($true_ans == $student_ans){
 				$total_correct++;
 			}
-			$total_questions++;
-			//echo("<script>alert('Checking row $total_questions: student answer = ".$student_ans." and correct ans = ".$true_ans."')</script>");
+			else{
+				if ($true_ans == A && $student_ans == B ){
+					$true_ans = $ans_a;
+					$student_ans = $ans_b;
+				}
+				elseif ($true_ans == A && $student_ans == C ){
+					$true_ans = $ans_a;
+					$student_ans = $ans_c;
+				}
+				elseif ($true_ans == A && $student_ans == D ){
+					$true_ans = $ans_a;
+					$student_ans = $ans_d;
+				}
+				elseif($true_ans == B && $student_ans == A){
+					$true_ans = $ans_b;
+					$student_ans = $ans_a;
+				}
+				elseif($true_ans == B && $student_ans == C){
+					$true_ans = $ans_b;
+					$student_ans = $ans_c;
+				}
+				elseif($true_ans == B && $student_ans == D){
+					$true_ans = $ans_b;
+					$student_ans = $ans_d;
+				}
+				elseif($true_ans == C && $student_ans == A){
+					$true_ans = $ans_c;
+					$student_ans = $ans_a;
+				}
+				elseif($true_ans == C && $student_ans == B){
+					$true_ans = $ans_c;
+					$student_ans = $ans_b;
+				}
+				elseif($true_ans == C && $student_ans == D){
+					$true_ans = $ans_c;
+					$student_ans = $ans_d;
+				}
+				elseif($true_ans == D && $student_ans == A){
+					$true_ans = $ans_d;
+					$student_ans = $ans_a;
+				}	
+				elseif($true_ans == D && $student_ans == B){
+					$true_ans = $ans_d;
+					$student_ans = $ans_b;
+				}	
+				elseif($true_ans == D && $student_ans == C){
+					$true_ans = $ans_d;
+					$student_ans = $ans_c;
+				}	
+				?>
+			<h3 style="text-align:left; color:DarkRed;"> Wrong Answer: </h3>
+			<h4><?php echo "For the question: $ques , you have answered $student_ans while the correct answer is  $true_ans.";?></h4>
+		<?php
 			}
+			$total_questions++;
+			}
+			
 		}
 		$score = $total_correct / $total_questions;
 		$score = $score * 100;
@@ -161,12 +221,13 @@
 	}
 	
 	?>
+	<br>
 	<table id="results">
     	<tr>
 		<caption><h1>Results</h1> </caption>
 		</tr>
 		<tr>		      	
-			<td>Questions Attempts</td>
+			<td>Total Questions </td>
         	<td>
             <?php
 			echo " $total_questions";
@@ -198,6 +259,7 @@
 			</td>
         </tr>
 	</table>
+	
 	<br> <br>
 	<a href="../StudentPages/StudentClass.php?id=<?php echo $class_id;?>"><input style="margin-left: 40px;" type="submit" name="back" value="Go Back to <?php echo $_SESSION['classname']?>" onclick=></a>
 

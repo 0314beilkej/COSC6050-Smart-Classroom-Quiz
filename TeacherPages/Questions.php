@@ -132,7 +132,7 @@
 												// list all quizzes for the teacher and class
 												$instructor_id = $_SESSION['username'];
 												$class_id = $_SESSION['class_id'];
-												$query = "select quiz_name, quiz_id from quizzes where instructor_id = '$instructor_id' and class_id ='$class_id'";
+												$query = "select quiz_name, quiz_id from quizzes where class_id ='$class_id'";
 												$query_run = $conn->query($query);
 												
 												while($row = mysqli_fetch_array($query_run)){
@@ -162,7 +162,7 @@
                         <tbody>
 							<?php 
 								if ($quiz_id == "") {
-									$question_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+									$question_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id' and b.class_id = '$class_id'";
 									//$question_query = "select a.question, a.correct_answer from questions_2 a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
 								} else {
 									$question_query = "SELECT question_id, question, ans_a, ans_b, ans_c, ans_d, case true_ans when 'A' then ans_a when 'B' then ans_b when 'C' then ans_c when 'D' then ans_d end as answer, true_ans 

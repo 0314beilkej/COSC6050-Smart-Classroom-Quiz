@@ -72,6 +72,7 @@
 		<ul>
 			<li><a href="./StudentClass.php"><i class="fas fa-question-circle"></i>Quizzes</a></li>
 			<li class="active"><a href="./StudentGrade.php"><i class="fas fa-bar-chart"></i>Grades</a></li>
+			<li><a href="./StudentRemove.php"><i class="fas fa-hand-peace-o"></i>Unenroll</a></li>
         </ul>
        </div>
 	<!--Main content here -->

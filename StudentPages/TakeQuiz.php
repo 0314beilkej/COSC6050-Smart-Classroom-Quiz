@@ -12,8 +12,10 @@
 	
 	$quiz_id= $_SESSION['quiz_id'];
 	$class_id= $_SESSION['class_id'];
+	$_SESSION['quiz_started'] = true;
+	
+	/* Get quiz duration */
 	$duration="";
-	//$res= "SELECT distinct a.quiz_id, a.class_id, a.time_limit FROM quizzes a WHERE a.class_id = '$class_id' AND a.quiz_id='$quiz_id'";
 	$res= "SELECT a.time_limit, a.quiz_id FROM quizzes a WHERE quiz_id='$quiz_id'";
 	$res_run = $conn->query($res);
 	while($row1= mysqli_fetch_array($res_run)){
@@ -94,14 +96,11 @@
     </header> 
 	<div id="container">
                 <h1> Quiz is Starting </h1>
-			<!--Countdown Timer Code-->
-				<?php
-					
-				?>
+				
+				<!-- Countdown timer code-->
 				<b><h2 id="response"></h2></b>
 				<script type="text/javascript">
-					 var x = setInterval(fun1,1000);
- 					 //setTimeout('submitForm()',$time_lapse);
+					var x = setInterval(fun1,1000);
  					function fun1(){
  					var xmlhttp = new XMLHttpRequest();
   					xmlhttp.open("GET","../php/QuizTime.php",false);

@@ -9,7 +9,7 @@
 .dashbord{
 	width:60%;
 	display: inline-block;
-	background-color:#34495E;
+	background-color:#e9573f;
 	color:#fff;
     margin-top: 65px;
     margin-left: 400px; 
@@ -22,10 +22,10 @@
 	border-radius:50%;
 	margin-top:-25px;
 	margin-bottom: 10px;
-	background-color:#34495E;
+	background-color:#e9573f;
 }
-.dashboard .icon-section:hover{
-	background-color: #5a5a5a;
+.dashboard:hover, .icon-section:hover, .icon-section i:hover{
+	background-color: #fc6e51;
 	cursor: pointer;
 }
 
@@ -45,23 +45,17 @@
 .dashbord-green .icon-section,.dashbord-green .icon-section i{
 	background-color: #16A085;
 }
-.dashbord-green .icon-section:hover{
-	background-color: #5a5a5a;
+.dashbord-green .icon-section:hover,.dashbord-green .icon-section i:hover{
+	background-color: #48cfAD;
 	cursor: pointer;
-}
-.dashbord-green .detail-section{
-	background-color: #149077;
 }
 
 .dashbord-blue .icon-section,.dashbord-blue .icon-section i{
-	background-color: #2980B9;
-}
-.dashbord-blue .detail-section{
-	background-color:#2573A6;
+	background-color: #3bafda;
 }
 
-.dashbord-blue .icon-section:hover{
-	background-color: #5a5a5a;
+.dashbord-blue .icon-section:hover,.dashbord-blue .icon-section i:hover{
+	background-color: #4fc1e9;
 	cursor: pointer;
 }
 

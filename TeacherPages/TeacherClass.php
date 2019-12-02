@@ -68,7 +68,7 @@
 		
 		<li><a href="#">
 			<i class="fa fa-user"style="height:18px;font-size: .9em;"></></></i>&nbsp <?php echo $_SESSION['name']; ?><i class="fa fa-chevron-down" style="font-size: .7em;"></i></a>
-			<ul>
+			<ul style="	z-index: 100; ">
 		       <li><a href="../MyProfile.php">My profile</a></li>
 		       <li><a href="../php/logout.php">Logout</a></li>
 			</ul>

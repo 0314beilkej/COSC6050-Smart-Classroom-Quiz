@@ -50,8 +50,7 @@
 	<!-- Script contains an alert message when clicking on Take Quiz Button-->
 	<script>
  		function showAlert() {
-    	//var myText = "Be ready! The quiz will start now. If the time clock runs out, your quiz will be automatically submitted and only the answered questions will count toward your grade!";
-    	var myText = "Be ready! The quiz will start now!";
+    	var myText = "Be ready! The quiz will start now. If the time clock runs out, your quiz will be automatically submitted and only the answered questions will count toward your grade!";
 		alert (myText);
  		 }
 	</script>
@@ -90,7 +89,8 @@
         <div class="sidebar">
 		<ul>
           <li class="active"><a href="./StudentClass.php"><i class="fas fa-question-circle"></i>Quizzes</a></li>
-		  <li><a href="./StudentGrade.php"><i class="fas fa-bar-chart"></i>Grades</a></li>  
+		  <li><a href="./StudentGrade.php"><i class="fas fa-bar-chart"></i>Grades</a></li>
+		  <li><a href="./StudentRemove.php"><i class="fas fa-hand-peace-o"></i>Unenroll</a></li>
         </ul>
        </div>
 		<!--Main content here -->

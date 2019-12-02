@@ -106,10 +106,12 @@
 					  <th style="width: 450px;">First Name</th>
 					  <th style="width: 450px;">Last Name</th>
 					  <th style="width: 450px;">Username</th>
+					  <th style="width: 450px;">Actions</th>
 					</tr>
 			  </thead>
 			  <tbody>
 				  <?php 
+					$class_id = $_SESSION['class_id'];
 					$classcode= $_SESSION['class_code'];
 					$query= "SELECT distinct e.student_id, u.firstname,u.lastname FROM enrollment e, users u WHERE e.class_code = '$classcode' AND e.student_id = u.username"; 
 					$query_run = $conn->query($query);
@@ -122,10 +124,11 @@
 					
 					?>
 						<tr>
-						  <th scope="row"><?php echo $count; ?></th>
-						  <td><?php echo $stu_first; ?></td>
-						  <td><?php echo $stu_last; ?></td>
-						  <td><?php echo $stu_id; ?></td>
+						<th scope="row"><?php echo $count; ?></th>
+						<td><?php echo $stu_first; ?></td>
+						<td><?php echo $stu_last; ?></td>
+						<td><?php echo $stu_id; ?></td>
+						<td><button type="button" class="btn_red" name="RemoveStudent" onclick="window.location.href = '../php/RemoveStudent.php?'"> Remove Student </button></td>
 						</tr>
 					<?php
 					}

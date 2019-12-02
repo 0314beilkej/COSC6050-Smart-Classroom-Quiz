@@ -26,6 +26,7 @@
 	document.getElementById("container").style.overflow = "hidden";
   }
 //Function to Hide Popup
-  function closeForm4() {
-      document.getElementById("addQuizModal").style.display = "none";
-    }
+function closeForm4() {
+  document.getElementById("addQuizModal").style.display = "none";
+}
+	
