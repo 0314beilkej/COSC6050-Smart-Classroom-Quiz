@@ -84,7 +84,7 @@
 				</tr>
 			</thead>
 		<tbody>
-		<td><button type="button" class="btn_red" name="StudentRemove" onclick="window.location.href = '../php/StudentUnenroll.php?id=<?php echo $stu_id ?>'"> Unenroll From This Class </button></td>
+		<td><button type="button" class="btn_red" name="StudentRemove" onclick="window.location.href = '../php/StudentUnenroll.php?id=<?php echo $user_id ?>'"> Unenroll From This Class </button></td>
 		</button></td>
 		</tbody>
 		</table>

@@ -167,7 +167,7 @@
 									$grades_query = "SELECT * from scores where quiz_id = '$quiz_id'";
 									
 								} else {
-									$grades_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
+									//$grades_query = "SELECT a.question_id, a.question, case a.true_ans when 'A' then a.ans_a when 'B' then a.ans_b when 'C' then a.ans_c when 'D' then a.ans_d end as answer from questions a, quizzes b where a.quiz_id = b.quiz_id and b.instructor_id = '$instructor_id'";
 									
 									// first get all of the students who have not yet attempted the quiz
 									$grades_query = "select a.student_id
@@ -193,10 +193,15 @@
 									</tr>
 								<?php
 									}
-
+									
+									// Get all the students who have taken the quiz and are currently enrolled in the class
 									$grades_query = "select a.student_id, a.attempt_count, a.best_score, a.first_attempt_score
 									from scores a 
-									where a.quiz_id = '$quiz_id'";
+									where a.quiz_id = '$quiz_id'
+									and exists 
+										(select 'x' 
+										from enrollment b
+										where a.student_id = b.student_id)";
 									
 									$query_run = $conn->query($grades_query);
 									while($row = mysqli_fetch_array($query_run)){

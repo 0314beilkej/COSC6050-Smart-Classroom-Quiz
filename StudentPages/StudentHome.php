@@ -64,6 +64,7 @@ include('../php/connect.php');
 		$username = $_SESSION['username'];
 		$query= "SELECT users.username, subject_image.image, class.class_id, class.classname, class.class_code, enrollment.student_id, enrollment.class_code FROM users, subject_image, class, enrollment WHERE users.username= enrollment.student_id and class.class_code=enrollment.class_code and class.subject=subject_image.subject and users.username = '$username'"; 
 		$query_run = $conn->query($query);
+		$class_count = 0;
 		while($row= mysqli_fetch_array($query_run))
 		{
 			$classname = $row["classname"];
@@ -84,7 +85,7 @@ include('../php/connect.php');
 							and a.active = 1";
 			$new_quiz_run = $conn->query($new_quiz);
 			$new_quiz_result = mysqli_num_rows($new_quiz_run);
-			
+			$class_count++;
 		?>
 			<div class="content-img">
 				<a href="./StudentClass.php?id=<?php echo $class_id?>" >
@@ -101,6 +102,13 @@ include('../php/connect.php');
 				</a>
 			</div>
 		<?php
+			}
+			// Display a message if there are no classes yet
+			if ($class_count == 0) {
+			?>
+			<br> <br> <br> <br>
+			<h2 style="margin-left: 10%; ">Welcome to MarQuiz!  Click the '+' to join your first class! </h2>
+			<?php
 			}
 		?>
 	</div>

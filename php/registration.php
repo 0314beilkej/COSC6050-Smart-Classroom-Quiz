@@ -16,10 +16,23 @@ if ($conn->connect_error) {
 	$role = filter_input(INPUT_POST, 'role');
 	
 	// Set session variables for form in the case that the user will need to re-enter data
-	$_SESSION['first_name_form'] = $firstname;
-	$_SESSION['last_name_form'] = $lastname;
-	$_SESSION['username_form'] = $username;
-	$_SESSION['email_form'] = $email;
+	if ($firstname != "") {
+		$_SESSION['first_name_form'] = $firstname;
+	}
+	if ($lastname != "") {
+		$_SESSION['last_name_form'] = $lastname;
+	}
+	if ($username != "") {
+		$_SESSION['username_form'] = $username;
+	}
+	if ($email != "") {
+		$_SESSION['email_form'] = $email;
+	}
+	
+	$firstname = $_SESSION['first_name_form'];
+	$lastname = $_SESSION['last_name_form'];
+	$username = $_SESSION['username_form'];
+	$email = $_SESSION['email_form'];
 	
 	// Ensure that the account can be added.  
 	
@@ -82,6 +95,9 @@ if ($conn->connect_error) {
 
 	// If the account information is valid, insert into user table
 	if ($valid === TRUE) {
+		// Set session variables
+		$_SESSION['username'] = $username;
+		$_SESSION['last_activity'] = time();
 		// Encrypt password
 		$password_hash = password_hash($password, PASSWORD_BCRYPT);
 		$newUserSQL = "insert into users (username, firstname, lastname, email, role, password_hash) values ('$username', '$firstname', '$lastname', '$email', '$role', '$password_hash')";
@@ -89,7 +105,6 @@ if ($conn->connect_error) {
 			$checkSQL = "SELECT username, role from users where username = '$username'";
 			$result = $conn->query($checkSQL);
 			while ($row = $result-> fetch_assoc()) {
-				$_SESSION['username'] = $username;
 				
 				//reset form data to null
 				$_SESSION['first_name_form'] = "";
@@ -99,10 +114,10 @@ if ($conn->connect_error) {
 				
 				//redirect to appropriate homescreen
 				if ($row["role"] == "Teacher") {
-					echo ("<script>alert('Your account has been successfully created. Click OK to view your homepage.')</script>");
+					echo ("<script>alert('Your account has been successfully created.')</script>");
 					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/TeacherPages/TeacherHome.php';</script>");
 				} else {
-					echo ("<script>alert('Your account has been successfully created. Click OK to view your homepage.')</script>");
+					echo ("<script>alert('Your account has been successfully created.')</script>");
 					echo("<script>window.location = 'https://pascal.mscsnet.mu.edu/quiz/StudentPages/StudentHome.php';</script>");
 			}
 			}

@@ -128,7 +128,7 @@
 						<td><?php echo $stu_first; ?></td>
 						<td><?php echo $stu_last; ?></td>
 						<td><?php echo $stu_id; ?></td>
-						<td><button type="button" class="btn_red" name="RemoveStudent" onclick="window.location.href = '../php/RemoveStudent.php?'"> Remove Student </button></td>
+						<td><button type="button" class="btn_red" name="RemoveStudent" onclick="window.location.href = '../php/RemoveStudent_copy.php?id=<?php echo $stu_id ?>'"> Remove Student </button></td>
 						</tr>
 					<?php
 					}

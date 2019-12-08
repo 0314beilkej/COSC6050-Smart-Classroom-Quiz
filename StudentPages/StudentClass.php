@@ -128,9 +128,11 @@
 							and a.active = 1";
 
 					$query_run = $conn->query($query);
+					$quiz_count = 0;
 					$count = 0;
 					while($row1= mysqli_fetch_array($query_run)){
 						$count++;
+						$quiz_count++;
 						$quiz_name = $row1['quiz_name'];
 						$quiz_time = $row1['time_limit'];
 						$quiz_ques = $row1['num_questions'];
@@ -169,6 +171,7 @@
 					$count = 0;
 					while($row1= mysqli_fetch_array($query_run)){
 						$count++;
+						$quiz_count++;
 						$quiz_name = $row1['quiz_name'];
 						$quiz_time = $row1['time_limit'];
 						$quiz_ques = $row1['num_questions'];
@@ -191,6 +194,17 @@
 					?>
                     </tbody>
                 </table>
+					<?php 
+					if ($quiz_count == 0) {
+					?>
+					<br>
+					<br>
+					<p style="margin-left: 10%; "> You don't have any quizzes to take for this class right now!  Check the 'Grades' tab to see how you've done on previous quizzes. </p>
+					<br>
+					<br>
+					<?php
+					}
+					?>
             </div>
 		</div>
 	</div>

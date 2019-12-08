@@ -105,7 +105,9 @@
 										 and c.quiz_id = a.quiz_id)
 									and a.active in (1,2)";
 								$query_run = $conn->query($grades_query);
+								$quiz_count = 0;
 								while($row = mysqli_fetch_array($query_run)){
+									$quiz_count++;
 									$row_quiz = $row['quiz_name'];
 									$active = $row['active'];
 									//$row_attempts = $row['attempt_count'];
@@ -134,6 +136,7 @@
 								and a.active in (1,2)";
 								$query_run = $conn->query($grades_query);
 								while($row = mysqli_fetch_array($query_run)){
+									$quiz_count++;
 									$row_quiz = $row['quiz_name'];
 									$row_attempts = $row['attempt_count'];
 									$row_best_score = $row['best_score'];
@@ -161,6 +164,17 @@
 							?>
                         </tbody>
                     </table>
+					<?php 
+					if ($quiz_count == 0) {
+					?>
+					<br>
+					<br>
+					<p style="margin-left: 15%; "> There haven't been any quizzes in this class yet! Come back again once your teacher adds a quiz. </p>
+					<br>
+					<br>
+					<?php
+					}
+					?>
                 </div>
             </div> 
     </div>
